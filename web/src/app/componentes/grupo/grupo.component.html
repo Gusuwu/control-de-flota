@@ -1,0 +1,107 @@
+<div style="background-color: white;" class="mat-elevation-z8">
+    <br>
+    <div [hidden]="mostrarFormulario">
+        <mat-form-field>
+        <mat-label >Busqueda</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: Teclado" #input>
+        </mat-form-field>
+    </div>
+        <div [hidden]="mostrarFormulario">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="grupId">
+                    <th mat-header-cell *matHeaderCellDef > ID </th>
+                    <td mat-cell *matCellDef="let grupo"> {{ grupo.grupId }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="grupNombre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                    <td mat-cell *matCellDef="let grupo"> {{ grupo.grupNombre }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="grupDescripcion">
+                    <th mat-header-cell *matHeaderCellDef > Descripcion </th>
+                    <td mat-cell *matCellDef="let grupo"> {{grupo.grupDescripcion}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                    <td mat-cell *matCellDef="let grupo">
+                            <button mat-raised-button color="basic" title="editar" (click)="editar(grupo)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button style="margin-left: 0.2cm;" mat-raised-button color="warn" title="borrar" (click)="borrar(grupo)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnas" ></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+            </table>
+
+            <div style="text-align: center; background-color: green;">
+                <button mat-raised-button (click)="agregar()">Agregar Grupo</button>
+            </div>
+</div>
+
+        
+<div *ngIf="mostrarFormulario">
+<br>
+            <form [formGroup]="formulario">
+                <div>
+
+                    <div style="text-align: center;">
+                        <h2>Informacion del grupo:</h2>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <label>Id: </label>
+                        
+                            <label *ngIf="this.formulario.value.grupId">{{this.formulario.value.grupId}}</label>
+                            <label *ngIf="!this.formulario.value.grupId">Id aun no cargado</label>
+                        
+                    </div>
+
+                    <div style="text-align: center;">
+                        <label>Fecha de Alta: </label>
+                        
+                            <label *ngIf="this.formulario.value.grupFechaAlta">{{this.formulario.value.grupFechaAlta | date:
+                                'dd-LL-yyyy'}}
+                            </label>
+                            <label *ngIf="!this.formulario.value.grupFechaAlta">Fecha aun no cargada</label>
+                        
+                    </div>
+                </div>
+
+                <br>
+                <div>
+
+                    <div style="text-align: center;">
+                        <h2>Editar Grupo:</h2>
+                    </div>
+
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput formControlName="grupNombre" required>
+                            <mat-error>El campo no puede ser vacio</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Descripcion</mat-label>
+                            <input matInput formControlName="grupDescripcion" required>
+                            <mat-error>El campo no puede ser vacio</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                    &nbsp;
+                    <button mat-raised-button (click)="cancelar()">Cancelar</button>
+                </div>
+            </form> <br>
+        </div>
+       
+</div>
