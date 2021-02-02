@@ -24,6 +24,7 @@ import { AppConfigService } from './core/config.service';
 import { GrupoComponent } from './componentes/grupo/grupo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { ServicioComponent } from './componentes/servicio/servicio.component';
+import { TareaComponent } from './componentes/tarea/tarea.component';
   
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ServicioComponent } from './componentes/servicio/servicio.component';
     AppComponent,
     HomeComponent,
     GrupoComponent,
-    ServicioComponent
+    ServicioComponent,
+    TareaComponent
     
   ],
   imports: [
