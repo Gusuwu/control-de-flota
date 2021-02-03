@@ -22,7 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { HomeComponent } from './componentes/home/home.component';
 import { AppConfigService } from './core/config.service';
 import { GrupoComponent } from './componentes/grupo/grupo.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ServicioComponent } from './componentes/servicio/servicio.component';
 import { TareaComponent } from './componentes/tarea/tarea.component';
   
@@ -34,7 +34,6 @@ import { TareaComponent } from './componentes/tarea/tarea.component';
     GrupoComponent,
     ServicioComponent,
     TareaComponent
-    
   ],
   imports: [
     BrowserModule,
@@ -57,7 +56,6 @@ import { TareaComponent } from './componentes/tarea/tarea.component';
     MatNativeDateModule,
     MatOptionModule,
     MatSelectModule
-    
   ],
   providers: [
     AppConfigService,
