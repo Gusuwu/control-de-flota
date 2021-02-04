@@ -19,7 +19,7 @@ import { DatosService } from 'src/app/shared/datos/datos.service';
 })
 export class ServicioTareaComponent implements OnInit {
 
-  @Input() servId!: number;
+  @Input() servId: number = 0;
 
   serviciotareas: ServicioTarea[] = [];
   seleccionado = new ServicioTarea();

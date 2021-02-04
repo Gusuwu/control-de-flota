@@ -36,8 +36,9 @@
 
             <form [formGroup]="form">
 
-                <input type="text" formControlName="setaServId">
-
+                <div [hidden]="true">
+                    <input type="text" formControlName="setaServId" [(ngModel)]="servId"> 
+                </div>
                 <div>
                     <mat-form-field appearance="outline">
                         <mat-label>Tarea</mat-label>

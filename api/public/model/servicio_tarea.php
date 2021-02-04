@@ -7,7 +7,8 @@ class ServicioTarea
             ,setaServId
             ,setaTareId
             ,CONVERT(VARCHAR, setaFechaAlta, 126) setaFechaAlta
-            ,setaBorrado'; 
+            ,setaBorrado
+            ,tareNombre'; 
 
     public $join = " LEFT OUTER JOIN Tarea ON setaTareId = tareId";
     

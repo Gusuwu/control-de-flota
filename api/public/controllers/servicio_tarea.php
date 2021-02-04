@@ -55,7 +55,7 @@ $app->put('/servicio_tarea', function ($request, $response, $args) {
     //$token = G::Autenticar($request, "ADMIN_MODIFICAR");
 
     $db = SQL::connect();
-    $model = new Servicio();
+    $model = new ServicioTarea();
 
     $results = $model->put($db);
 
