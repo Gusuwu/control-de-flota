@@ -25,6 +25,8 @@ import { GrupoComponent } from './componentes/grupo/grupo.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ServicioComponent } from './componentes/servicio/servicio.component';
 import { TareaComponent } from './componentes/tarea/tarea.component';
+import { ServicioTareaComponent } from './componentes/servicio_tarea/servicio_tarea.component';
+import { ConfirmarComponent } from './shared/confirmar/confirmar.component';
   
 
 @NgModule({
@@ -33,7 +35,9 @@ import { TareaComponent } from './componentes/tarea/tarea.component';
     HomeComponent,
     GrupoComponent,
     ServicioComponent,
-    TareaComponent
+    TareaComponent,
+    ServicioTareaComponent,
+    ConfirmarComponent
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,8 @@ import { MatTable } from '@angular/material/table';
 
 import { Servicio } from 'src/app/modelo/servicio';
 import { ServicioService } from 'src/app/servicios/servicio.service';
+import { DatosService } from 'src/app/shared/datos/datos.service';
+import { ServicioTareaService } from 'src/app/servicios/servicio_tarea';
 
 @Component({
   selector: 'app-servicio',
@@ -16,7 +18,7 @@ import { ServicioService } from 'src/app/servicios/servicio.service';
 })
 export class ServicioComponent implements OnInit, AfterViewInit {
 
-  constructor(public sS : ServicioService, public formBuilder : FormBuilder) { }
+  constructor(public sS : ServicioService, public formBuilder : FormBuilder, public datosService: DatosService, public stService : ServicioTareaService) { }
 
   servicios : Servicio [] = [];
   columnas: string[] = ['servNombre', 'servDescripcion','servPeriodo', 'servKM', 'servFecha', 'acciones'];
@@ -27,7 +29,7 @@ export class ServicioComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort! : MatSort;
 
-  servicioSeleccted = new Servicio();
+  servicioSelected = new Servicio();
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -59,20 +61,42 @@ export class ServicioComponent implements OnInit, AfterViewInit {
     )
   }
 
+  mostrarServicio():Boolean{
+    if(this.servicioSelected.servId){
+      return this.mostrarFormulario = true;
+    }else{
+      return this.mostrarFormulario = false;
+    }
+  }
+
   actualizar(){
    this.dataSource.data = this.servicios;
    this.dataSource.sort = this.sort;
   }
 
+  actualizarST(id : number){
+    this.datosService.sertar.forEach( (dato) => { dato.setaServId = id;
+      if(dato.setaBorrado){
+        this.stService.delete(dato.setaId).subscribe();
+      }else if(dato.setaId < 0){
+        this.stService.post(dato).subscribe();
+      }else (dato.setaId > 0 )
+        this.stService.put(dato).subscribe();
+      }
+   );
+    this.actualizar();
+    this.mostrarFormulario = false;
+  }
+
   agregar() {
     this.formulario.reset();
-    this.servicioSeleccted = new Servicio();
+    this.servicioSelected = new Servicio();
     this.mostrarFormulario = true;
   }
 
   editar(seleccionado: Servicio) {
     this.mostrarFormulario = true;
-    this.servicioSeleccted = seleccionado;
+    this.servicioSelected = seleccionado;
     this.formulario.setValue(seleccionado);
   }
 
@@ -95,20 +119,22 @@ export class ServicioComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    Object.assign(this.servicioSeleccted, this.formulario.value);
+    Object.assign(this.servicioSelected, this.formulario.value);
 
-    if (this.servicioSeleccted.servId) {
-      this.sS.put(this.servicioSeleccted)
+    if (this.servicioSelected.servId) {
+      this.sS.put(this.servicioSelected)
         .subscribe((servicio) => {
-          this.mostrarFormulario = false;
+          this.actualizarST(servicio.servId);
+          //this.mostrarFormulario = false;
         });
 
     } else {
-      this.sS.post(this.servicioSeleccted)
+      this.sS.post(this.servicioSelected)
         .subscribe((servicio) => {
           this.servicios.push(servicio);
-          this.mostrarFormulario = false;
-          this.actualizar();
+          this.actualizarST(servicio.servId);
+          //this.mostrarFormulario = false;
+          //this.actualizar();
         });
 
     }

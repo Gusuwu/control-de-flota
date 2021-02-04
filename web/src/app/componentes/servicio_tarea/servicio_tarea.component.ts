@@ -14,14 +14,14 @@ import { DatosService } from 'src/app/shared/datos/datos.service';
 
 @Component({
   selector: 'app-servicio-tarea',
-  templateUrl: './servicio-tarea.component.html',
-  styleUrls: ['./servicio-tarea.component.css']
+  templateUrl: './servicio_tarea.component.html',
+  styleUrls: ['./servicio_tarea.component.css']
 })
 export class ServicioTareaComponent implements OnInit {
 
   @Input() servId!: number;
 
-  detalles: ServicioTarea[] = [];
+  serviciotareas: ServicioTarea[] = [];
   seleccionado = new ServicioTarea();
 
   columnas: string[] = ['tareNombre', 'setaServId', 'setaTareId', 'acciones'];
@@ -31,8 +31,8 @@ export class ServicioTareaComponent implements OnInit {
   form = new FormGroup({});
   mostrarFormulario = false;
 
-  productos: Tarea[] = [];
-  detaIdNew: number = -1;
+  tareas: Tarea[] = [];
+  idAux: number = -1;
   
 
   constructor(private servicioTareaService: ServicioTareaService,
@@ -46,14 +46,14 @@ export class ServicioTareaComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       setaId: [''],
-      setaServId: ['', Validators.required],
+      setaServId: [''],
       setaTareId: ['', Validators.required],
       setaBorrado: [''],
       setaFechaAlta: [''],
-      tareNombre: ['']
+      tareNombre: [''],
     });
 
-    this.servicioTareaService.get(`detaPediId=${this.servId}`).subscribe(
+    this.servicioTareaService.get(`setaServId=${this.servId}`).subscribe(
       (servicioTarea) => {
         this.datosService.sertar = servicioTarea;
         this.actualizarTabla();
@@ -62,7 +62,7 @@ export class ServicioTareaComponent implements OnInit {
 
     this.tareaService.get().subscribe(
       (productos) => {
-        this.productos = productos;
+        this.tareas = productos;
       }
     )
   }
@@ -73,9 +73,9 @@ export class ServicioTareaComponent implements OnInit {
 
   agregar() {
 
-    this.detaIdNew--;
+    this.idAux--;
     this.seleccionado = new ServicioTarea();
-    this.seleccionado.setaId = this.detaIdNew;
+    this.seleccionado.setaId = this.idAux;
 
     this.form.setValue(this.seleccionado)
 
@@ -97,7 +97,7 @@ export class ServicioTareaComponent implements OnInit {
     });
   }
 
-  edit(seleccionado: ServicioTarea) {
+  editar(seleccionado: ServicioTarea) {
     this.mostrarFormulario = true;
     this.seleccionado = seleccionado;
     
@@ -113,22 +113,18 @@ export class ServicioTareaComponent implements OnInit {
 
     Object.assign(this.seleccionado, this.form.value);
 
-
-    this.seleccionado.tareNombre = this.productos.find(tarea => tarea.tareId == this.seleccionado.setaTareId)!.tareNombre;
+    this.seleccionado.tareNombre = this.tareas.find(tarea => tarea.tareId == this.seleccionado.setaTareId)!.tareNombre;
 
     if(this.seleccionado.setaId > 0){
-      const elemento = this.detalles.find(detalle => detalle.setaId == this.seleccionado.setaId);
-      this.detalles.splice(this.seleccionado.setaId, 1, elemento!);
+      const elemento = this.serviciotareas.find(sertar => sertar.setaId == this.seleccionado.setaId);
+      this.serviciotareas.splice(this.seleccionado.setaId, 1, elemento!);
     }else{
       this.datosService.sertar.push(this.seleccionado);
     }
 
-  
     this.mostrarFormulario=false;
     this.actualizarTabla();
-
   }
-
   cancelar() {
     this.mostrarFormulario = false;
   }
