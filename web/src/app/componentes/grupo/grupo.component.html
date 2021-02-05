@@ -102,6 +102,9 @@
                     <button mat-raised-button (click)="cancelar()">Cancelar</button>
                 </div>
             </form> <br>
+            <div [hidden]="!mostrarGrupo()">
+                <app-grupo-servicio [grupId]="grupoSeleccted.grupId"></app-grupo-servicio> 
+             </div>
         </div>
        
 </div>

@@ -8,6 +8,9 @@ import { MatTable } from '@angular/material/table';
 
 import { Grupo } from 'src/app/modelo/grupo';
 import { GrupoService } from 'src/app/servicios/grupo.service';
+import { DatosService } from 'src/app/shared/datos/datos.service';
+import { GrupoServicioService } from 'src/app/servicios/grupo_servicio.service';
+import { GrupoServicioComponent } from '../grupo_servicio/grupo_servicio.component';
 
 @Component({
   selector: 'app-grupo',
@@ -16,7 +19,7 @@ import { GrupoService } from 'src/app/servicios/grupo.service';
 })
 export class GrupoComponent implements OnInit, AfterViewInit {
 
-  constructor(public gS : GrupoService, public formBuilder : FormBuilder) { }
+  constructor(public gS : GrupoService, public formBuilder : FormBuilder, public datosService: DatosService, public gsService: GrupoServicioService) { }
 
   grupos : Grupo [] = [];
   columnas: string[] = ['grupId', 'grupNombre', 'grupDescripcion', 'acciones'];
@@ -38,6 +41,19 @@ export class GrupoComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  actualizarGS(id : number){
+    this.datosService.gruser.forEach( (dato) => { dato.grusServId = id;
+      if(dato.grusBorrado){
+        this.gsService.delete(dato.grusId).subscribe();
+      }else if(dato.grusId < 0){
+        this.gsService.post(dato).subscribe();
+      }else (dato.grusId > 0 )
+        this.gsService.put(dato).subscribe();
+      }
+   );
+    this.actualizar();
+    this.mostrarFormulario = false;
+  }
 
   ngOnInit(): void {
     this.formulario = this.formBuilder.group({
@@ -54,6 +70,14 @@ export class GrupoComponent implements OnInit, AfterViewInit {
         this.actualizar();
       }
     )
+  }
+
+  mostrarGrupo():Boolean{
+    if(this.grupoSeleccted.grupId){
+      return this.mostrarFormulario = true;
+    }else{
+      return this.mostrarFormulario = false;
+    }
   }
 
   actualizar(){
@@ -96,16 +120,18 @@ export class GrupoComponent implements OnInit, AfterViewInit {
 
     if (this.grupoSeleccted.grupId) {
       this.gS.put(this.grupoSeleccted)
-        .subscribe((producto) => {
-          this.mostrarFormulario = false;
+        .subscribe((grupo) => {
+          this.actualizarGS(grupo.grupId);
+          //this.mostrarFormulario = false;
         });
 
     } else {
       this.gS.post(this.grupoSeleccted)
         .subscribe((grupo) => {
           this.grupos.push(grupo);
-          this.mostrarFormulario = false;
-          this.actualizar();
+          this.actualizarGS(grupo.grupId);
+          //this.mostrarFormulario = false;
+          //this.actualizar();
         });
 
     }
