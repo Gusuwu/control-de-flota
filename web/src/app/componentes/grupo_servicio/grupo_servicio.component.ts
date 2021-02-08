@@ -116,6 +116,9 @@ export class GrupoServicioComponent implements OnInit {
     Object.assign(this.seleccionado, this.form.value);
 
     this.seleccionado.servNombre = this.servicios.find(servicio => servicio.servId == this.seleccionado.grusServId)!.servNombre;
+    this.seleccionado.grusPeriodo = this.servicios.find(servicio  => servicio.servId == this.seleccionado.grusServId)!.servPeriodo;
+    this.seleccionado.grusKM = this.servicios.find(servicio  => servicio.servId == this.seleccionado.grusServId)!.servKM;
+    this.seleccionado.grusFecha = this.servicios.find(servicio  => servicio.servId == this.seleccionado.grusServId)!.servFecha;
 
     if(this.seleccionado.grusId > 0){
       const elemento = this.gruposervicios.find(gruser => gruser.grusId == this.seleccionado.grusId);

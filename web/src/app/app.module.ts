@@ -61,7 +61,8 @@ import { GrupoServicioComponent } from './componentes/grupo_servicio/grupo_servi
     MatDatepickerModule,
     MatNativeDateModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatToolbarModule
   ],
   providers: [
     AppConfigService,

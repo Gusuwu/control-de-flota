@@ -4,7 +4,7 @@ export class GrupoServicio {
     grusServId : number = 0;
     grusPeriodo : number = 0;
     grusKM : number = 0;
-    grusFecha : number = 0;
+    grusFecha : boolean = false;
     grusFechaAlta : Date = new Date();
     grusBorrado : boolean = false;
 
