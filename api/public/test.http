@@ -1,7 +1,7 @@
 
 ### PEDIDO
 
-GET http://localhost:8888/index.php/grupo_servicio HTTP/1.1
+GET http://localhost:8888/index.php/movil_grupo HTTP/1.1
 
 ###
 
@@ -22,11 +22,11 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8888/index.php/servicio HTTP/1.1
+PUT http://localhost:8888/index.php/grupo HTTP/1.1
 
 {
-  "servId" : 1,
-  "servNombre":"Alineación y balanceo",
-  "servDescripcion":"Verificar la direccion"
+  "grupId" : 37,
+  "grupNombre":"Auto",
+  "grupDescripcion":"BMW"
   }
 

@@ -144,7 +144,7 @@
                 </div>
             </form> <br>
 
-            <div [hidden]="!mostrarServicio()">
+            <div *ngIf="servicioSelected && servicioSelected.servId && mostrarFormulario">
                 <app-servicio-tarea [servId]="servicioSelected.servId"></app-servicio-tarea> 
              </div>
 

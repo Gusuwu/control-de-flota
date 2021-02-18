@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -17,16 +17,31 @@ import { GrupoServicioComponent } from '../grupo_servicio/grupo_servicio.compone
   templateUrl: './grupo.component.html',
   styleUrls: ['./grupo.component.css']
 })
-export class GrupoComponent implements OnInit, AfterViewInit {
+export class GrupoComponent implements OnInit, AfterViewInit{
 
-  constructor(public gS : GrupoService, public formBuilder : FormBuilder, public datosService: DatosService, public gsService: GrupoServicioService) { }
+  constructor(public gS : GrupoService, public formBuilder : FormBuilder, public datosService: DatosService, public gsService: GrupoServicioService, private cdref : ChangeDetectorRef) { }
+/*  
+  ngAfterViewChecked() {
+    let show = this.isShowExpand();
+    if (show != this.show) { 
+      this.show = show;
+      this.cdref.detectChanges();
+    }
+  }
 
+  isShowExpand()
+  {
+    return this.mostrarFormulario;
+  }
+*/
   grupos : Grupo [] = [];
   columnas: string[] = ['grupId', 'grupNombre', 'grupDescripcion', 'acciones'];
   dataSource = new MatTableDataSource<Grupo>();
   
   formulario = new FormGroup({});
   mostrarFormulario = false;
+  show = false;
+ 
 
   @ViewChild(MatSort) sort! : MatSort;
 
@@ -42,7 +57,7 @@ export class GrupoComponent implements OnInit, AfterViewInit {
   }
 
   actualizarGS(id : number){
-    this.datosService.gruser.forEach( (dato) => { dato.grusServId = id;
+    this.datosService.gruser.forEach( (dato) => { dato.grusGrupId = id;
       if(dato.grusBorrado){
         this.gsService.delete(dato.grusId).subscribe();
       }else if(dato.grusId < 0){
@@ -86,15 +101,16 @@ export class GrupoComponent implements OnInit, AfterViewInit {
   }
 
   agregar() {
-    this.formulario.reset();
+    
     this.grupoSeleccted = new Grupo();
     this.mostrarFormulario = true;
+    this.formulario.reset();
   }
 
   editar(seleccionado: Grupo) {
-    this.mostrarFormulario = true;
     this.grupoSeleccted = seleccionado;
     this.formulario.setValue(seleccionado);
+    this.mostrarFormulario = true;   
   }
 
   borrar(fila: Grupo) {
@@ -122,7 +138,6 @@ export class GrupoComponent implements OnInit, AfterViewInit {
       this.gS.put(this.grupoSeleccted)
         .subscribe((grupo) => {
           this.actualizarGS(grupo.grupId);
-          //this.mostrarFormulario = false;
         });
 
     } else {
@@ -130,8 +145,6 @@ export class GrupoComponent implements OnInit, AfterViewInit {
         .subscribe((grupo) => {
           this.grupos.push(grupo);
           this.actualizarGS(grupo.grupId);
-          //this.mostrarFormulario = false;
-          //this.actualizar();
         });
 
     }

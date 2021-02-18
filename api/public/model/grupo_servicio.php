@@ -12,8 +12,8 @@ class GrupoServicio
             ,grusBorrado
             ,servNombre'; 
 
-    public $join = " LEFT OUTER JOIN Servicio ON grusServId = servId";
-    
+    public $join = "LEFT OUTER JOIN Servicio ON grusServId = servId";
+
     public function get ($db) {
         $sql = "SELECT TOP (1000) $this->fields FROM $this->table
                 $this->join
@@ -24,7 +24,7 @@ class GrupoServicio
             $params = [$_GET["grusGrupId"]];
             $sql = $sql . " AND grusGrupId = ? ";
         };
-        
+
 
         $stmt = SQL::query($db, $sql, $params);
         $results = [];
@@ -45,17 +45,22 @@ class GrupoServicio
     }
 
     public function post ($db) {
+        
+       //file_put_contents("z_jsonGrupoServicio.txt",json_encode(DATA));
+       
         $stmt = SQL::query($db,
         "INSERT INTO $this->table
             (grusGrupId
             ,grusServId
+            ,grusPeriodo
+            ,grusKM
+            ,grusFecha
             ,grusFechaAlta
             ,grusBorrado)
-        VALUES (?,?,GETDATE(),0);
-
+        VALUES (?,?,?,?,?,GETDATE(),0);
         SELECT @@IDENTITY grusId, CONVERT(VARCHAR, GETDATE(), 126) grusFechaAlta;",
-        [ DATA["grusServId"]
-        ,DATA["grusGrupId"]] );
+        [ DATA["grusGrupId"]
+        ,DATA["grusServId"],DATA["grusPeriodo"],DATA["grusKM"],DATA["grusFecha"]] );
 
         sqlsrv_fetch($stmt); // INSERT
         sqlsrv_next_result($stmt);// SELECT @@IDENTITY
@@ -82,4 +87,4 @@ class GrupoServicio
         return DATA;
     }
 }
-?>
+?> 

@@ -61,14 +61,6 @@ export class ServicioComponent implements OnInit, AfterViewInit {
     )
   }
 
-  mostrarServicio():Boolean{
-    if(this.servicioSelected.servId){
-      return this.mostrarFormulario = true;
-    }else{
-      return this.mostrarFormulario = false;
-    }
-  }
-
   actualizar(){
    this.dataSource.data = this.servicios;
    this.dataSource.sort = this.sort;
