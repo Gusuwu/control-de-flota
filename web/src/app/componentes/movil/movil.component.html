@@ -104,6 +104,10 @@
                         <button mat-raised-button (click)="cancelar()">Cancelar</button>
                     </div>
                 </form> <br>
+                
+                <div *ngIf="movilSelected && movilSelected.moviId && mostrarFormulario">
+                    <app-movil-grupo [moviId]="movilSelected.moviId"></app-movil-grupo>
+                </div>
             </div>
            
     </div>

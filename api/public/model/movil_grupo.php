@@ -6,7 +6,8 @@ class MovilGrupo
             ,mogrMoviId
             ,mogrGrupId
             ,CONVERT(VARCHAR, mogrFechaAlta, 126) mogrFechaAlta
-            ,mogrBorrado'; 
+            ,mogrBorrado
+            ,grupNombre'; 
 
     public $join = "LEFT OUTER JOIN Grupo ON mogrGrupId = grupId";
 

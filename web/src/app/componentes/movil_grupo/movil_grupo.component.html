@@ -1,0 +1,64 @@
+<br>
+        <div [hidden]="mostrarFormulario">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                <mat-text-column name="moviId" headerText="ID"></mat-text-column>
+                <mat-text-column name="mogrMoviId" headerText="ID Movil"></mat-text-column>
+                <mat-text-column name="mogrGrupId" headerText="ID Grupo"></mat-text-column>
+                <mat-text-column name="grupNombre" headerText="grupNombre"></mat-text-column>
+                
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let movgru">
+                        <button mat-raised-button color="accent" title="editar" (click)="editar(movgru)">
+                            Editar
+                        </button>
+                        <button style="margin-left: 0.2cm;" mat-raised-button color="warn" title="borrar" (click)="delete(movgru)">
+                            Borrar
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Sin items todavia...</td>
+                </tr>
+            </table>
+
+            <div style="text-align: center;">
+                <button mat-raised-button color="primary" (click)="agregar()">Agregar</button>
+            </div>
+        </div>
+
+        <div *ngIf="mostrarFormulario">
+
+            <form [formGroup]="form">
+
+                <div [hidden]="true">
+                    <input type="text" formControlName="mogrMoviId" [(ngModel)]="moviId"> 
+                </div>
+                <div style="text-align: center;">
+                    <h2>Seleccione una grupo</h2>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Grupos</mat-label>
+                        <mat-select formControlName="mogrGrupId" required>
+                            <mat-option *ngFor="let grupo of grupos" [value]="grupo.grupId">
+                                {{grupo.grupNombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Selecciona una opcion valida</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div style="text-align: center;">
+                    <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                    &nbsp;
+                    <button mat-raised-button type="submit" (click)="cancelar()">Cancelar</button>
+                </div>
+            </form>
+
+        </div>
+    

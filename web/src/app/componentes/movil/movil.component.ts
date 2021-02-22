@@ -8,6 +8,8 @@ import { MatTable } from '@angular/material/table';
 
 import { Movil } from 'src/app/modelo/movil';
 import { MovilService } from 'src/app/servicios/movil.service';
+import { DatosService } from 'src/app/shared/datos/datos.service';
+import { MovilGrupoService } from 'src/app/servicios/movil_grupo.service';
 
 
 @Component({
@@ -17,7 +19,7 @@ import { MovilService } from 'src/app/servicios/movil.service';
 })
 export class MovilComponent implements OnInit, AfterViewInit {
 
-  constructor(public mS : MovilService, public formBuilder : FormBuilder) { }
+  constructor(public mS : MovilService, public formBuilder : FormBuilder, public datosService : DatosService, public mgService : MovilGrupoService) { }
 
   moviles : Movil [] = [];
   columnas: string[] = ['moviId', 'moviModoFecha','moviModoOdometro', 'acciones'];
@@ -62,6 +64,20 @@ export class MovilComponent implements OnInit, AfterViewInit {
    this.dataSource.sort = this.sort;
   }
 
+  actualizarMG(id : number){
+    this.datosService.movgru.forEach( (dato) => { dato.mogrMoviId = id;
+      if(dato.mogrBorrado){
+        this.mgService.delete(dato.mogrId).subscribe();
+      }else if(dato.mogrId < 0){
+        this.mgService.post(dato).subscribe();
+      }else (dato.mogrId > 0 )
+        this.mgService.put(dato).subscribe();
+      }
+   );
+    this.actualizar();
+    this.mostrarFormulario = false;
+  }
+
   agregar() {
     this.formulario.reset();
     this.movilSelected = new Movil();
@@ -97,8 +113,8 @@ export class MovilComponent implements OnInit, AfterViewInit {
 
     if (this.movilSelected.moviId) {
       this.mS.put(this.movilSelected)
-        .subscribe((servicio) => {
-          this.mostrarFormulario = false;
+        .subscribe((movil) => {
+          this.actualizarMG(movil.moviId);
         });
 
     } else {
@@ -106,7 +122,7 @@ export class MovilComponent implements OnInit, AfterViewInit {
         .subscribe((movil) => {
           this.moviles.push(movil);
           this.mostrarFormulario = false;
-          this.actualizar();
+          this.actualizarMG(movil.moviId);
         });
 
     }
