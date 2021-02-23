@@ -1,7 +1,7 @@
 
 ### PEDIDO
 
-GET http://localhost:8888/index.php/movil_grupo HTTP/1.1
+GET http://localhost:8888/index.php/movil_servicio HTTP/1.1
 
 ###
 
