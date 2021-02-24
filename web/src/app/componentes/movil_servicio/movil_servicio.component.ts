@@ -20,6 +20,7 @@ import { DatosService } from 'src/app/shared/datos/datos.service';
 export class MovilServicioComponent implements OnInit {
 
   @Input() servId: number = 0;
+  @Input() moviId: number = 0;
 
   movilserivicio: MovilServicio[] = [];
   seleccionado = new MovilServicio();
