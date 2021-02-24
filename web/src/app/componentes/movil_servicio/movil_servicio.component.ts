@@ -19,7 +19,7 @@ import { DatosService } from 'src/app/shared/datos/datos.service';
 })
 export class MovilServicioComponent implements OnInit {
 
-  @Input() moviId: number = 0;
+  @Input() servId: number = 0;
 
   movilserivicio: MovilServicio[] = [];
   seleccionado = new MovilServicio();
@@ -53,7 +53,7 @@ export class MovilServicioComponent implements OnInit {
         moseBorrado: [''],
     });
 
-    this.msService.get().subscribe(
+    this.msService.get(`moseServId=${this.servId}`).subscribe(
       (ms) => {
         this.datosService.movser = ms;
         this.actualizarTabla();
