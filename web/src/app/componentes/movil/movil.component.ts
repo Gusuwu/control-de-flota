@@ -10,6 +10,7 @@ import { Movil } from 'src/app/modelo/movil';
 import { MovilService } from 'src/app/servicios/movil.service';
 import { DatosService } from 'src/app/shared/datos/datos.service';
 import { MovilGrupoService } from 'src/app/servicios/movil_grupo.service';
+import { MovilServicioService } from 'src/app/servicios/movil_servicio.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { MovilGrupoService } from 'src/app/servicios/movil_grupo.service';
 })
 export class MovilComponent implements OnInit, AfterViewInit {
 
-  constructor(public mS : MovilService, public formBuilder : FormBuilder, public datosService : DatosService, public mgService : MovilGrupoService) { }
+  constructor(public mS : MovilService, public formBuilder : FormBuilder, public datosService : DatosService, public mgService : MovilGrupoService, public msService: MovilServicioService) { }
 
   moviles : Movil [] = [];
   columnas: string[] = ['moviId', 'moviModoFecha','moviModoOdometro', 'acciones'];
@@ -27,6 +28,7 @@ export class MovilComponent implements OnInit, AfterViewInit {
   
   formulario = new FormGroup({});
   mostrarFormulario = false;
+  mostrarForm = false;
 
   @ViewChild(MatSort) sort! : MatSort;
 
@@ -78,6 +80,20 @@ export class MovilComponent implements OnInit, AfterViewInit {
     this.mostrarFormulario = false;
   }
 
+  actualizarMS(id : number){
+    this.datosService.movser.forEach( (dato) => { dato.moseServId = id;
+      if(dato.moseBorrado){
+        this.msService.delete(dato.moseId).subscribe();
+      }else if(dato.moseId < 0){
+        this.msService.post(dato).subscribe();
+      }else (dato.moseId > 0 )
+        this.msService.put(dato).subscribe();
+      }
+   );
+    this.actualizar();
+    this.mostrarForm = false;
+  }
+
   agregar() {
     this.formulario.reset();
     this.movilSelected = new Movil();
@@ -86,6 +102,12 @@ export class MovilComponent implements OnInit, AfterViewInit {
 
   editar(seleccionado: Movil) {
     this.mostrarFormulario = true;
+    this.movilSelected = seleccionado;
+    this.formulario.setValue(seleccionado);
+  }
+
+  modificar(seleccionado: Movil) {
+    this.mostrarForm = true;
     this.movilSelected = seleccionado;
     this.formulario.setValue(seleccionado);
   }
@@ -115,6 +137,7 @@ export class MovilComponent implements OnInit, AfterViewInit {
       this.mS.put(this.movilSelected)
         .subscribe((movil) => {
           this.actualizarMG(movil.moviId);
+          this.actualizarMS(movil.moviId);
         });
 
     } else {
@@ -123,6 +146,7 @@ export class MovilComponent implements OnInit, AfterViewInit {
           this.moviles.push(movil);
           this.mostrarFormulario = false;
           this.actualizarMG(movil.moviId);
+          this.actualizarMS(movil.moviId);
         });
 
     }

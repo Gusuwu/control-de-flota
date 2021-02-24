@@ -30,6 +30,9 @@
                             <button mat-raised-button color="basic" title="editar" (click)="editar(movil)">
                                 <mat-icon>edit</mat-icon>
                             </button>
+                            <button style="margin-left: 0.2cm;" mat-raised-button color="basic" title="modificar" (click)="modificar(movil)">
+                                <mat-icon>settings</mat-icon>
+                            </button>
                             <button style="margin-left: 0.2cm;" mat-raised-button color="warn" title="borrar" (click)="borrar(movil)">
                                 <mat-icon>delete</mat-icon>
                             </button>
@@ -108,6 +111,73 @@
                 <div *ngIf="movilSelected && movilSelected.moviId && mostrarFormulario">
                     <app-movil-grupo [moviId]="movilSelected.moviId"></app-movil-grupo>
                 </div>
+
+                <div *ngIf="movilSelected && movilSelected.moviId && mostrarForm">
+                    <app-movil-servicio [moviId]="movilSelected.moviId"></app-movil-servicio>
+                </div>
+
             </div>
            
-    </div>
+            <div *ngIf="mostrarForm">
+                <form [formGroup]="formulario">
+                    <div>
+    
+                        <div style="text-align: center;">
+                            <h2>Informacion del movil:</h2>
+                        </div>
+    
+                        <div style="text-align: center;">
+                            <label>Id: </label>
+                            
+                                <label *ngIf="this.formulario.value.moviId">{{this.formulario.value.moviId}}</label>
+                                <label *ngIf="!this.formulario.value.moviId">Id aun no cargado</label>
+                            
+                        </div>
+    
+                        <div style="text-align: center;">
+                            <label>Fecha de Alta: </label>
+                            
+                                <label *ngIf="this.formulario.value.moviFechaAlta">{{this.formulario.value.moviFechaAlta | date:
+                                    'dd-LL-yyyy'}}
+                                </label>
+                                <label *ngIf="!this.formulario.value.moviFechaAlta">Fecha aun no cargada</label>
+                            
+                        </div>
+                    </div>
+    
+                    <br>
+                    <div>
+    
+                        <div style="text-align: center;">
+                            <h2>Editar Movil:</h2>
+                        </div>
+    
+                        <div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Movil</mat-label>
+                                <mat-select formControlName="moviId">
+                                    
+                                  </mat-select>
+                                  <mat-hint>Seleccione una</mat-hint>
+                                  <mat-error *ngIf="formulario.hasError('required')">You must make a selection</mat-error>
+                                  <mat-error *ngIf="formulario.hasError('pattern') && !formulario.hasError('required')">
+                                    Your selection is invalid
+                                  </mat-error>
+                            </mat-form-field>
+                        </div>
+                   
+                        
+                    </div>
+    
+                    <div style="text-align: center;">
+                        <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                        &nbsp;
+                        <button mat-raised-button (click)="cancelar()">Cancelar</button>
+                    </div>
+                </form> <br>
+                <div *ngIf="movilSelected && movilSelected.moviId && mostrarForm">
+                    <app-movil-servicio [moviId]="movilSelected.moviId"></app-movil-servicio>
+                </div>
+
+            </div>
+</div>
