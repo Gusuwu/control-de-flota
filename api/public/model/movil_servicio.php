@@ -12,6 +12,7 @@ class MovilServicio
 
     public $join = "LEFT OUTER JOIN Servicio ON moseServId = servId";
 
+    //LEFT OUTER JOIN Servicio ON moseServId = servId
     public function get ($db) {
         $sql = "SELECT TOP (1000) $this->fields FROM $this->table
                 $this->join

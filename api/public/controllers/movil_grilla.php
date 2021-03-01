@@ -1,12 +1,12 @@
 <?php
-include_once "model/movil.php";
+include_once "model/movil_grilla.php";
 
 
-$app->get('/movil', function ($request, $response, $args) {
+$app->get('/movil_grilla', function ($request, $response, $args) {
     //$token = G::Autenticar($request, "ADMIN_VER");
 
     $db = SQL::connect();
-    $model = new Movil();
+    $model = new MovilGrilla();
 
     $results = $model->get($db);
     SQL::close($db);
@@ -19,12 +19,12 @@ $app->get('/movil', function ($request, $response, $args) {
     });
 
 
-$app->delete('/movil/{id}', function ($request, $response, $args) {
+$app->delete('/movil_grilla/{id}', function ($request, $response, $args) {
 
     $id = $args['id'];
 
     $db = SQL::connect();
-    $model = new Movil();
+    $model = new MovilGrilla();
 
     $results = $model->delete($db, $id);
     SQL::close($db);
@@ -36,11 +36,11 @@ $app->delete('/movil/{id}', function ($request, $response, $args) {
               ->withHeader('Content-Type', 'application/json');
     });
 
-$app->put('/movil', function ($request, $response, $args) {
+$app->put('/movil_grilla', function ($request, $response, $args) {
         //$token = G::Autenticar($request, "ADMIN_MODIFICAR");
     
         $db = SQL::connect();
-        $model = new Movil();
+        $model = new MovilGrilla();
     
         $results = $model->put($db);
 
@@ -53,11 +53,11 @@ $app->put('/movil', function ($request, $response, $args) {
                   ->withHeader('Content-Type', 'application/json');
 });
 
-$app->post('/movil', function ($request, $response, $args) {
+$app->post('/movil_grilla', function ($request, $response, $args) {
     //$token = G::Autenticar($request, "ADMIN_MODIFICAR");
 
     $db = SQL::connect();
-    $model = new Movil();
+    $model = new MovilGrilla();
 
     $results = $model->post($db);
 

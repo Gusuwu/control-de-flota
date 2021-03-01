@@ -28,9 +28,11 @@ import { TareaComponent } from './componentes/tarea/tarea.component';
 import { ServicioTareaComponent } from './componentes/servicio_tarea/servicio_tarea.component';
 import { ConfirmarComponent } from './shared/confirmar/confirmar.component';
 import { GrupoServicioComponent } from './componentes/grupo_servicio/grupo_servicio.component';
-import { MovilComponent } from './componentes/movil/movil.component';
+import { MovilComponent } from './componentes/movil-avl/movil.component';
 import { MovilGrupoComponent } from './componentes/movil_grupo/movil_grupo.component';
 import { MovilServicioComponent } from './componentes/movil_servicio/movil_servicio.component';
+import { MovilGComponent } from './componentes/movil/movil.component';
+
   
 
 @NgModule({
@@ -45,7 +47,8 @@ import { MovilServicioComponent } from './componentes/movil_servicio/movil_servi
     MovilComponent,
     MovilGrupoComponent,
     MovilServicioComponent,
-    ConfirmarComponent
+    ConfirmarComponent,
+    MovilGComponent,
   ],
   imports: [
     BrowserModule,

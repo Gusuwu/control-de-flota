@@ -11,6 +11,8 @@ import { MovilService } from 'src/app/servicios/movil.service';
 import { DatosService } from 'src/app/shared/datos/datos.service';
 import { MovilGrupoService } from 'src/app/servicios/movil_grupo.service';
 import { MovilServicioService } from 'src/app/servicios/movil_servicio.service';
+import { MovilG } from 'src/app/modelo/movil-grilla';
+import { MovilGService } from 'src/app/servicios/movil-grilla.service';
 
 
 @Component({
@@ -18,21 +20,23 @@ import { MovilServicioService } from 'src/app/servicios/movil_servicio.service';
   templateUrl: './movil.component.html',
   styleUrls: ['./movil.component.css']
 })
-export class MovilComponent implements OnInit, AfterViewInit {
+export class MovilGComponent implements OnInit, AfterViewInit {
 
-  constructor(public mS : MovilService, public formBuilder : FormBuilder, public datosService : DatosService, public mgService : MovilGrupoService, public msService: MovilServicioService) { }
+  constructor(public mS : MovilGService, public formBuilder : FormBuilder, public datosService : DatosService, public mgService : MovilGrupoService, public msService: MovilServicioService) { }
 
-  moviles : Movil [] = [];
+  moviles : MovilG [] = [];
   columnas: string[] = ['moviId', 'moviModoFecha','moviModoOdometro', 'acciones'];
-  dataSource = new MatTableDataSource<Movil>();
+  dataSource = new MatTableDataSource<MovilG>();
   
   formulario = new FormGroup({});
-  mostrarFormulario = false;
-  mostrarForm = false;
+  mostrarEditar = false;
+  mostrarManten = false;
+  mostrarGrilla = false;
+  mostrarAgregar = false;
 
   @ViewChild(MatSort) sort! : MatSort;
 
-  movilSelected = new Movil();
+  movilSelected = new MovilG();
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -50,7 +54,7 @@ export class MovilComponent implements OnInit, AfterViewInit {
       moviModoFecha: ['', Validators.required],
       moviModoOdometro: ['', Validators.required],
       moviBorrado: [''],
-      moviFechaAlta: ['']
+      moviFechaAlta: [''],
     });
 
     this.mS.get().subscribe(
@@ -77,42 +81,31 @@ export class MovilComponent implements OnInit, AfterViewInit {
       }
    );
     this.actualizar();
-    this.mostrarFormulario = false;
-  }
-
-  actualizarMS(id : number){
-    this.datosService.movser.forEach( (dato) => { dato.moseServId = id;
-      if(dato.moseBorrado){
-        this.msService.delete(dato.moseId).subscribe();
-      }else if(dato.moseId < 0){
-        this.msService.post(dato).subscribe();
-      }else (dato.moseId > 0 )
-        this.msService.put(dato).subscribe();
-      }
-   );
-    this.actualizar();
-    this.mostrarForm = false;
+    this.mostrarEditar = false;
   }
 
   agregar() {
     this.formulario.reset();
-    this.movilSelected = new Movil();
-    this.mostrarFormulario = true;
+    this.movilSelected = new MovilG();
+    this.mostrarGrilla = true;
+    this.mostrarAgregar = true;
   }
 
-  editar(seleccionado: Movil) {
-    this.mostrarFormulario = true;
+  editar(seleccionado: MovilG) {
+    this.mostrarEditar = true;
+    this.mostrarGrilla = true;
     this.movilSelected = seleccionado;
     this.formulario.setValue(seleccionado);
   }
 
-  modificar(seleccionado: Movil) {
-    this.mostrarForm = true;
+  modificar(seleccionado: MovilG) {
+    this.mostrarManten = true;
+    this.mostrarGrilla = true;
     this.movilSelected = seleccionado;
     this.formulario.setValue(seleccionado);
   }
 
-  borrar(fila: Movil) {
+  borrar(fila: MovilG) {
         this.mS.delete(fila.moviId)
           .subscribe(() => {
             this.moviles = this.moviles.filter((movil) => {
@@ -137,24 +130,28 @@ export class MovilComponent implements OnInit, AfterViewInit {
       this.mS.put(this.movilSelected)
         .subscribe((movil) => {
           this.actualizarMG(movil.moviId);
-          this.actualizarMS(movil.moviId);
+          
         });
 
     } else {
       this.mS.post(this.movilSelected)
         .subscribe((movil) => {
-          this.moviles.push(movil);
-          this.mostrarFormulario = false;
+          this.moviles.push(movil);        
           this.actualizarMG(movil.moviId);
-          this.actualizarMS(movil.moviId);
+          
         });
 
     }
 
+    this.mostrarGrilla = false;
   }
 
   cancelar() {
-    this.mostrarFormulario = false;
+    this.mostrarEditar = false;
+    this.mostrarManten = false;
+    this.mostrarAgregar = false;
+    this.mostrarGrilla = false;
+    this.actualizar();
   }
 
 

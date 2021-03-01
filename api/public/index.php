@@ -47,6 +47,7 @@ include_once 'controllers/tarea.php';
 include_once 'controllers/servicio_tarea.php';
 include_once 'controllers/grupo_servicio.php';
 include_once 'controllers/movil.php';
+include_once 'controllers/movil_grilla.php';
 include_once 'controllers/movil_grupo.php';
 include_once 'controllers/movil_servicio.php';
 

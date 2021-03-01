@@ -3,20 +3,57 @@
 class Movil
 {
     public $table = 'Movil';
-    public $fields = 'moviId
-                ,CONVERT(VARCHAR, moviModoFecha, 126) moviModoFecha
-                ,moviModoOdometro
-                ,CONVERT(VARCHAR, moviFechaAlta, 126) moviFechaAlta
-                ,moviBorrado'; 
-
-    public $join = "INNER JOIN AVL_Estructura.dbo.Movil as AVLMOVIL ON Movil.moviId = AVLMOVIL.MovilID ";
+    public $fields = 'B.moviId
+                    ,CONVERT(VARCHAR, B.moviModoFecha, 126) moviModoFecha
+                    ,moviModoOdometro
+                    ,CONVERT(VARCHAR, B.moviFechaAlta, 126) moviFechaAlta
+                    ,B.moviBorrado
+                    ,A.movilID
+                    ,A.patente
+                    ,A.descripcion
+                    ,C.Nombre dependencia
+                    ,C.OrdenamientoArbol dependenciaCompleta
+                    ,A.marca
+                    ,A.modelo
+                    ,A.anio
+                    ,A.chasis
+                    ,T.Nombre tipoMovil
+                    ,A.numeroMovil
+                    ,A.color
+                    ,A.seguro
+                    ,A.poliza
+                    ,A.numeroMotor
+                    ,A.peso      
+                    ,A.tienePatrullaje
+                    ,A.CUIT'; 
     
     public function get ($db) {
-        $sql = "SELECT $this->fields FROM $this->table
-                $this->join
-                WHERE moviBorrado = 0";
+        $sql = "SELECT TOP 100 $this->fields
+                FROM AVL_Estructura.dbo.Movil A
+                LEFT OUTER JOIN SISEP_ControlFlota.dbo.Movil B ON A.MovilID = B.moviId
+                LEFT OUTER JOIN AVL_Estructura.dbo.Comp C ON A.CompID = C.CompID
+                LEFT OUTER JOIN AVL_Estructura.dbo.TipoMovil T ON T.TipoMovilID = A.TipoMovilID 
+                WHERE A.Activa = 1 AND A.Borrado = 0 ";
 
-        $stmt = SQL::query($db, $sql, null);
+
+        $params = null;
+
+        if (isset( $_GET["patente"])){
+            $params = ["%" . $_GET["patente"] . "%"];
+            $sql = $sql . " AND A.patente LIKE ? ";
+        };
+
+        if (isset( $_GET["descripcion"])){
+            $params = ["%" . $_GET["descripcion"] . "%"];
+            $sql = $sql . " AND A.descripcion LIKE ? ";
+        };
+
+        if (isset( $_GET["dependencia"])){
+            $params = ["%" . $_GET["dependencia"] . "%"];
+            $sql = $sql . " AND C.Nombre LIKE ? ";
+        };
+
+        $stmt = SQL::query($db, $sql, $params);
         $results = [];
         while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
             $results[] = $row;
@@ -27,7 +64,7 @@ class Movil
 
     public function delete ($db, $id) {
         $stmt = SQL::query($db,
-        "UPDATE $this->table SET moviBorrado = 1 - moviBorrado
+        "UPDATE $this->table SET moviBorrado = 1
         WHERE moviId = ?", [$id] );
 
         sqlsrv_fetch($stmt);
@@ -37,35 +74,30 @@ class Movil
     public function post ($db) {
         $stmt = SQL::query($db,
         "INSERT INTO $this->table
-        (moviModoFecha
-        ,moviModoOdometro
+        (moviId
         ,moviFechaAlta
         ,moviBorrado)
-        VALUES (?,?,GETDATE(),0);
-
-        SELECT @@IDENTITY moviId, CONVERT(VARCHAR, GETDATE(), 126) moviFechaAlta;",
-        [DATA["moviModoFecha"], DATA["moviModoFecha"]] );
+        VALUES (?,GETDATE(),0)",
+        [DATA["moviId"]] );
 
         sqlsrv_fetch($stmt); // INSERT
-        sqlsrv_next_result($stmt);// SELECT @@IDENTITY
-        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
         $results = DATA;
-        $results["moviId"] = $row["moviId"];
-        $results["moviFechaAlta"] = $row["moviFechaAlta"];
-        $results["moviBorrado"] = 0;
         return $results;
     }
 
     public function put ($db) {
+        // TODO
+        return;
+        
         $stmt = SQL::query($db,
         "UPDATE $this->table
-        SET moviModoFecha = ?
-            ,moviModoOdometro = ?
+        SET moviNombre = ?
+            ,moviDescripcion = ?
         WHERE moviId = ?",
         [
-            DATA["moviModoFecha"],
-            DATA["moviModoOdometro"],
+            DATA["moviNombre"],
+            DATA["moviDescripcion"],
             DATA["moviId"]
         ] );
 

@@ -50,11 +50,12 @@ export class MovilServicioComponent implements OnInit {
         moseServId: [''],
         mosePeriodo: [''],
         moseKM: [''],
+        moseFecha: [''],
         moseFechaAlta: [''],
         moseBorrado: [''],
     });
 
-    this.msService.get(`moseServId=${this.servId}`).subscribe(
+    this.msService.get().subscribe(
       (ms) => {
         this.datosService.movser = ms;
         this.actualizarTabla();
@@ -100,8 +101,7 @@ export class MovilServicioComponent implements OnInit {
 
   editar(seleccionado: MovilServicio) {
     this.mostrarFormulario = true;
-    this.seleccionado = seleccionado;
-    
+    this.seleccionado = seleccionado; 
     this.form.setValue(seleccionado);
 
   }
@@ -113,6 +113,8 @@ export class MovilServicioComponent implements OnInit {
     }
 
     Object.assign(this.seleccionado, this.form.value);
+
+    this.seleccionado.moseServId = this.servicios.find(grupo => grupo.servId == this.seleccionado.moseServId)!.servId;
 
     if(this.seleccionado.moseId > 0){
       const elemento = this.movilserivicio.find(sertar => sertar.moseId == this.seleccionado.moseId);
