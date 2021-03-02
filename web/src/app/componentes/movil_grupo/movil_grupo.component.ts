@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Grupo } from 'src/app/modelo/grupo';
 import { MovilGrupo } from 'src/app/modelo/movil_grupo';
 import { GrupoService } from 'src/app/servicios/grupo.service';
+import { MovilGService } from 'src/app/servicios/movil-grilla.service';
 import { MovilGrupoService } from 'src/app/servicios/movil_grupo.service';
 import { ConfirmarComponent } from 'src/app/shared/confirmar/confirmar.component';
 import { DatosService } from 'src/app/shared/datos/datos.service';
@@ -23,7 +24,7 @@ export class MovilGrupoComponent implements OnInit {
   movilgrupos: MovilGrupo[] = [];
   seleccionado = new MovilGrupo();
 
-  columnas: string[] = ['moviId', 'grupNombre', 'mogrMoviId', 'mogrGrupId', 'acciones'];
+  columnas: string[] = ['mogrId', 'grupNombre', 'mogrMoviId', 'mogrGrupId', 'acciones'];
   dataSource = new MatTableDataSource<MovilGrupo>();
 
 
@@ -38,7 +39,8 @@ export class MovilGrupoComponent implements OnInit {
     private grupoService: GrupoService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    public datosService: DatosService) { }
+    public datosService: DatosService,
+    public ms : MovilGService) { }
 
 
   ngOnInit(): void {
@@ -54,7 +56,7 @@ export class MovilGrupoComponent implements OnInit {
 
     this.movilGrupoService.get(`mogrMoviId=${this.moviId}`).subscribe(
       (movilgrupo) => {
-        this.datosService.movgru = movilgrupo;
+        this.ms.movgru = movilgrupo;
         this.actualizarTabla();
       }
     );
@@ -67,7 +69,7 @@ export class MovilGrupoComponent implements OnInit {
   }
 
   actualizarTabla() {
-    this.dataSource.data = this.datosService.movgru.filter(borrado => borrado.mogrBorrado==false);
+    this.dataSource.data = this.ms.movgru.filter(borrado => borrado.mogrBorrado==false);
   }
 
   agregar() {
@@ -118,7 +120,7 @@ export class MovilGrupoComponent implements OnInit {
       const elemento = this.movilgrupos.find(movgru => movgru.mogrId == this.seleccionado.mogrId);
       this.movilgrupos.splice(this.seleccionado.mogrId, 1, elemento!);
     }else{
-      this.datosService.movgru.push(this.seleccionado);
+      this.ms.movgru.push(this.seleccionado);
     }
 
     this.mostrarFormulario=false;

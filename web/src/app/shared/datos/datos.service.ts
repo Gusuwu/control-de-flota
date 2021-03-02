@@ -12,7 +12,6 @@ export class DatosService {
 
     sertar : ServicioTarea[] = [];
     gruser : GrupoServicio[] = [];
-    movgru : MovilGrupo[] = [];
     movser : MovilServicio[] = [];
 
   constructor(){}

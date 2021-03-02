@@ -4,10 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
-
-import { Movil } from 'src/app/modelo/movil';
-import { MovilService } from 'src/app/servicios/movil.service';
 import { DatosService } from 'src/app/shared/datos/datos.service';
 import { MovilGrupoService } from 'src/app/servicios/movil_grupo.service';
 import { MovilServicioService } from 'src/app/servicios/movil_servicio.service';
@@ -22,7 +18,7 @@ import { MovilGService } from 'src/app/servicios/movil-grilla.service';
 })
 export class MovilGComponent implements OnInit, AfterViewInit {
 
-  constructor(public mS : MovilGService, public formBuilder : FormBuilder, public datosService : DatosService, public mgService : MovilGrupoService, public msService: MovilServicioService) { }
+  constructor(public mS : MovilGService, public formBuilder : FormBuilder, public mgService : MovilGrupoService, public msService: MovilServicioService) { }
 
   moviles : MovilG [] = [];
   columnas: string[] = ['moviId', 'moviModoFecha','moviModoOdometro', 'acciones'];
@@ -71,7 +67,7 @@ export class MovilGComponent implements OnInit, AfterViewInit {
   }
 
   actualizarMG(id : number){
-    this.datosService.movgru.forEach( (dato) => { dato.mogrMoviId = id;
+    this.mS.movgru.forEach( (dato) => { dato.mogrMoviId = id;
       if(dato.mogrBorrado){
         this.mgService.delete(dato.mogrId).subscribe();
       }else if(dato.mogrId < 0){
@@ -124,26 +120,7 @@ export class MovilGComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    Object.assign(this.movilSelected, this.formulario.value);
-
-    if (this.movilSelected.moviId) {
-      this.mS.put(this.movilSelected)
-        .subscribe((movil) => {
-          this.actualizarMG(movil.moviId);
-          
-        });
-
-    } else {
-      this.mS.post(this.movilSelected)
-        .subscribe((movil) => {
-          this.moviles.push(movil);        
-          this.actualizarMG(movil.moviId);
-          
-        });
-
-    }
-
-    this.mostrarGrilla = false;
+    this.actualizarMG(this.movilSelected.moviId);
   }
 
   cancelar() {

@@ -56,25 +56,17 @@
 
             <form [formGroup]="formulario">
                 <div>
-
+           
                     <div style="text-align: center;">
-                        <h2>Seleccione un movil:</h2>
-                    </div>
-                    <div style="text-align: center;">
-                        <button mat-raised-button (click)="cancelar()">Cancelar</button>
+                        <button mat-raised-button (click)="cancelar()">Volver</button>
                     </div>
                     <br>
                     <app-movil-avl></app-movil-avl>
-                </div>
-
-                <br>
-
-                <div style="text-align: center;">
-                    <button mat-raised-button (click)="cancelar()">Cancelar</button>
-                </div>
+                </div> 
             </form>
 
         </div>
+
             <div *ngIf="mostrarEditar">
              <br>
                 <form [formGroup]="formulario">

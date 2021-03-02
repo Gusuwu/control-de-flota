@@ -2,7 +2,7 @@
         <div [hidden]="mostrarFormulario">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-                <mat-text-column name="moviId" headerText="ID"></mat-text-column>
+                <mat-text-column name="mogrId" headerText="ID"></mat-text-column>
                 <mat-text-column name="mogrMoviId" headerText="ID Movil"></mat-text-column>
                 <mat-text-column name="mogrGrupId" headerText="ID Grupo"></mat-text-column>
                 <mat-text-column name="grupNombre" headerText="grupNombre"></mat-text-column>
@@ -40,6 +40,7 @@
                 <div [hidden]="false">
                     <input type="text" formControlName="mogrMoviId" [(ngModel)]="moviId"> 
                 </div>
+
                 <div style="text-align: center;">
                     <h2>Seleccione una grupo</h2>
                     <mat-form-field appearance="outline">
