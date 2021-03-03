@@ -120,7 +120,7 @@ export class MovilGComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.actualizarMG(this.movilSelected.moviId);
+    this.mostrarGrilla = false;
   }
 
   cancelar() {

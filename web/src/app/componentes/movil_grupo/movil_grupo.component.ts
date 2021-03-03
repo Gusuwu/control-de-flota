@@ -32,7 +32,7 @@ export class MovilGrupoComponent implements OnInit {
   mostrarFormulario = false;
 
   grupos: Grupo[] = [];
-  idAux: number = -1;
+  //idAux: number = -1;
   
 
   constructor(private movilGrupoService: MovilGrupoService,
@@ -56,7 +56,7 @@ export class MovilGrupoComponent implements OnInit {
 
     this.movilGrupoService.get(`mogrMoviId=${this.moviId}`).subscribe(
       (movilgrupo) => {
-        this.ms.movgru = movilgrupo;
+        this.movilgrupos = movilgrupo;
         this.actualizarTabla();
       }
     );
@@ -69,17 +69,16 @@ export class MovilGrupoComponent implements OnInit {
   }
 
   actualizarTabla() {
+    this.dataSource.data = this.movilgrupos;
+  }
+
+  actualizar(){
     this.dataSource.data = this.ms.movgru.filter(borrado => borrado.mogrBorrado==false);
   }
 
   agregar() {
-
-    this.idAux--;
     this.seleccionado = new MovilGrupo();
-    this.seleccionado.mogrId = this.idAux;
-
-    this.form.setValue(this.seleccionado)
-
+    this.form.setValue(this.seleccionado);
     this.mostrarFormulario = true;
   }
 
@@ -91,8 +90,17 @@ export class MovilGrupoComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if(result){
-        fila.mogrBorrado = true;
-        this.actualizarTabla();
+        this.movilGrupoService.delete(fila.mogrId)
+        .subscribe(() => {
+          this.movilgrupos = this.movilgrupos.filter((movilgrupo) => {
+            if (movilgrupo.mogrId != fila.mogrId) {
+              return true
+            } else {
+              return false
+            }
+          });
+          this.actualizarTabla();
+        });
       }
 
     });
@@ -116,15 +124,20 @@ export class MovilGrupoComponent implements OnInit {
 
     this.seleccionado.grupNombre = this.grupos.find(grupo => grupo.grupId == this.seleccionado.mogrGrupId)!.grupNombre;
 
-    if(this.seleccionado.mogrId > 0){
-      const elemento = this.movilgrupos.find(movgru => movgru.mogrId == this.seleccionado.mogrId);
-      this.movilgrupos.splice(this.seleccionado.mogrId, 1, elemento!);
-    }else{
-      this.ms.movgru.push(this.seleccionado);
-    }
+    if(this.seleccionado.mogrId){
+      this.movilGrupoService.put(this.seleccionado).subscribe((movilgrupo)=>{
+        this.mostrarFormulario = false;
+      });
 
-    this.mostrarFormulario=false;
-    this.actualizarTabla();
+    }else{
+      this.movilGrupoService.post(this.seleccionado)
+        .subscribe((movilgrupo) => {
+          this.movilgrupos.push(movilgrupo);
+          this.mostrarFormulario = false;
+          this.actualizarTabla();
+        });
+    }
+   
   }
   cancelar() {
     this.mostrarFormulario = false;
