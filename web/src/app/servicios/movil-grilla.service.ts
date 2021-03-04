@@ -6,6 +6,7 @@ import { AppConfigService } from '../core/config.service';
 
 import { MovilG } from '../modelo/movil-grilla';
 import { MovilGrupo } from '../modelo/movil_grupo';
+import { MovilServicio } from '../modelo/movil_servicio';
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class MovilGService
 extends ApiService<MovilG>{
 
   movgru : MovilGrupo[] = [];
+  movser : MovilServicio[] = [];
 
   constructor(
     protected http: HttpClient,

@@ -8,7 +8,8 @@ class MovilServicio
             ,moseKM
             ,moseFecha
             ,CONVERT(VARCHAR, moseFechaAlta, 126) moseFechaAlta
-            ,moseBorrado'; 
+            ,moseBorrado
+            ,servNombre'; 
 
     public $join = "LEFT OUTER JOIN Servicio ON moseServId = servId";
 

@@ -9,4 +9,6 @@ export class Movil {
     patente : string = "";
     descripcion : string = "";
     dependencia: string = "";
+    marca: string = "";
+    modelo: string = "";
 }

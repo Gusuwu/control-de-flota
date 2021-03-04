@@ -3,19 +3,38 @@
 class MovilGrilla
 {
     public $table = 'Movil';
-    public $fields = 'moviId
-                    ,CONVERT(VARCHAR, moviModoFecha, 126) moviModoFecha
-                    ,moviModoOdometro
-                    ,CONVERT(VARCHAR, moviFechaAlta, 126) moviFechaAlta
-                    ,moviBorrado
-                   '; 
+    public $fields = 'B.moviId
+                    ,CONVERT(VARCHAR, B.moviModoFecha, 126) moviModoFecha
+                    ,B.moviModoOdometro
+                    ,CONVERT(VARCHAR, B.moviFechaAlta, 126) moviFechaAlta
+                    ,B.moviBorrado
+                    ,A.movilID
+                    ,A.patente
+                    ,A.descripcion
+                    ,C.Nombre dependencia
+                    ,C.OrdenamientoArbol dependenciaCompleta
+                    ,A.marca
+                    ,A.modelo
+                    ,A.anio
+                    ,A.chasis
+                    ,T.Nombre tipoMovil
+                    ,A.numeroMovil
+                    ,A.color
+                    ,A.seguro
+                    ,A.poliza
+                    ,A.numeroMotor
+                    ,A.peso      
+                    ,A.tienePatrullaje
+                    ,A.CUIT'; 
     
                     public $join = "";
 
     public function get ($db) {
-        $sql = "SELECT $this->fields FROM $this->table
-                $this->join
-                WHERE moviBorrado = 0";
+        $sql = "SELECT $this->fields FROM SISEP_ControlFlota.dbo.Movil B
+                LEFT OUTER JOIN AVL_Estructura.dbo.Movil A ON B.moviId = A.MovilID
+                LEFT OUTER JOIN AVL_Estructura.dbo.Comp C ON A.CompID = C.CompID
+                LEFT OUTER JOIN AVL_Estructura.dbo.TipoMovil T ON T.TipoMovilID = A.TipoMovilID 
+                WHERE B.moviBorrado = 0";
 
 
         $params = null;
@@ -31,7 +50,7 @@ class MovilGrilla
 
     public function delete ($db, $id) {
         $stmt = SQL::query($db,
-        "UPDATE $this->table SET moviBorrado = 1
+        "UPDATE $this->table SET moviBorrado = 1 - moviBorrado
         WHERE moviId = ?", [$id] );
 
         sqlsrv_fetch($stmt);

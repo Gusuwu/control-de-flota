@@ -4,4 +4,11 @@ export class MovilG {
     moviModoOdometro : number = 0;
     moviFechaAlta: Date = new Date();
     moviBorrado: boolean = false;
+
+    movilID : number = 0;
+    patente : string = "";
+    descripcion : string = "";
+    dependencia: string = "";
+    marca: string = "";
+    modelo: string = "";
 }

@@ -6,4 +6,6 @@ export class MovilServicio {
     moseFecha : boolean = false;
     moseFechaAlta: Date = new Date();
     moseBorrado: boolean = false;
+
+    servNombre : string = "";
 }

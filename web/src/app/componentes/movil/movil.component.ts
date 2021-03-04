@@ -21,7 +21,7 @@ export class MovilGComponent implements OnInit, AfterViewInit {
   constructor(public mS : MovilGService, public formBuilder : FormBuilder, public mgService : MovilGrupoService, public msService: MovilServicioService) { }
 
   moviles : MovilG [] = [];
-  columnas: string[] = ['moviId', 'moviModoFecha','moviModoOdometro', 'acciones'];
+  columnas: string[] = ['moviId', 'patente', 'marca', 'modelo', 'moviModoFecha','moviModoOdometro', 'acciones'];
   dataSource = new MatTableDataSource<MovilG>();
   
   formulario = new FormGroup({});

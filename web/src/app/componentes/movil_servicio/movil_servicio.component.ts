@@ -22,11 +22,11 @@ export class MovilServicioComponent implements OnInit {
   @Input() servId: number = 0;
   @Input() moviId: number = 0;
 
-  movilserivicio: MovilServicio[] = [];
+  movilservicio: MovilServicio[] = [];
   seleccionado = new MovilServicio();
 
   columnas: string[] = ['moseId', 'moseServId', 'mosePeriodo', 'moseKM', 'moseFecha', 'acciones'];
-  dataSource = new MatTableDataSource<ServicioTarea>();
+  dataSource = new MatTableDataSource<MovilServicio>();
 
 
   form = new FormGroup({});
@@ -53,11 +53,12 @@ export class MovilServicioComponent implements OnInit {
         moseFecha: [''],
         moseFechaAlta: [''],
         moseBorrado: [''],
+        servNombre: [''],
     });
 
     this.msService.get().subscribe(
       (ms) => {
-        this.datosService.movser = ms;
+        this.movilservicio = ms;
         this.actualizarTabla();
       }
     );
@@ -70,17 +71,12 @@ export class MovilServicioComponent implements OnInit {
   }
 
   actualizarTabla() {
-    this.dataSource.data = this.datosService.sertar.filter(borrado => borrado.setaBorrado==false);
+    this.dataSource.data = this.movilservicio;
   }
 
   agregar() {
-
-    this.idAux--;
     this.seleccionado = new MovilServicio();
-    this.seleccionado.moseId = this.idAux;
-
     this.form.setValue(this.seleccionado)
-
     this.mostrarFormulario = true;
   }
 
@@ -92,11 +88,20 @@ export class MovilServicioComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if(result){
-        fila.moseBorrado = true;
-        this.actualizarTabla();
+        this.msService.delete(fila.moseId)
+        .subscribe(() => {
+          this.movilservicio = this.movilservicio.filter((movilservicio) => {
+            if (movilservicio.moseId != fila.moseId) {
+              return true
+            } else {
+              return false
+            }
+          });
+          this.actualizarTabla(); 
+        });
       }
 
-    });
+      });
   }
 
   editar(seleccionado: MovilServicio) {
@@ -115,16 +120,20 @@ export class MovilServicioComponent implements OnInit {
     Object.assign(this.seleccionado, this.form.value);
 
     this.seleccionado.moseServId = this.servicios.find(grupo => grupo.servId == this.seleccionado.moseServId)!.servId;
+    this.seleccionado.servNombre = this.servicios.find(grupo => grupo.servId == this.seleccionado.moseServId)!.servNombre;
 
-    if(this.seleccionado.moseId > 0){
-      const elemento = this.movilserivicio.find(sertar => sertar.moseId == this.seleccionado.moseId);
-      this.movilserivicio.splice(this.seleccionado.moseId, 1, elemento!);
+    if(this.seleccionado.moseId){
+      this.msService.put(this.seleccionado).subscribe((movilservicio)=>{
+        this.mostrarFormulario = false;
+      });
     }else{
-      this.datosService.movser.push(this.seleccionado);
+      this.msService.post(this.seleccionado)
+        .subscribe((movilservicio) => {
+          this.movilservicio.push(movilservicio);
+          this.mostrarFormulario = false;
+          this.actualizarTabla();
+        });
     }
-
-    this.mostrarFormulario=false;
-    this.actualizarTabla();
   }
   cancelar() {
     this.mostrarFormulario = false;
