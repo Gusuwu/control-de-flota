@@ -3,6 +3,7 @@ class MovilServicio
 {
     public $table = 'MovilServicio';
     public $fields = 'moseId
+            ,moseMoviId
             ,moseServId
             ,mosePeriodo
             ,moseKM
@@ -20,9 +21,9 @@ class MovilServicio
                 WHERE moseBorrado = 0";
 
         $params = null;
-        if (isset( $_GET["moseServId"])){
-            $params = [$_GET["moseServId"]];
-            $sql = $sql . " AND moseServId = ? ";
+        if (isset( $_GET["moseMoviId"])){
+            $params = [$_GET["moseMoviId"]];
+            $sql = $sql . " AND moseMoviId = ? ";
         };
 
 
@@ -50,15 +51,16 @@ class MovilServicio
        
         $stmt = SQL::query($db,
         "INSERT INTO $this->table
-            (moseServId
+            (moseMoviId
+            ,moseServId
             ,mosePeriodo
             ,moseKM
             ,moseFecha
             ,moseFechaAlta
             ,moseBorrado)
-        VALUES (?,?,?,?,GETDATE(),0);
+        VALUES (?,?,?,?,?,GETDATE(),0);
         SELECT @@IDENTITY moseId, CONVERT(VARCHAR, GETDATE(), 126) moseFechaAlta;",
-        [ DATA["moseServId"]
+        [ DATA["moseMoviId"], DATA["moseServId"]
         ,DATA["mosePeriodo"],DATA["moseKM"],DATA["moseFecha"]] );
 
         sqlsrv_fetch($stmt); // INSERT

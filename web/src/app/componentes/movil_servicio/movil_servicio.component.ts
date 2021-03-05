@@ -25,7 +25,7 @@ export class MovilServicioComponent implements OnInit {
   movilservicio: MovilServicio[] = [];
   seleccionado = new MovilServicio();
 
-  columnas: string[] = ['moseId', 'moseServId', 'mosePeriodo', 'moseKM', 'moseFecha', 'acciones'];
+  columnas: string[] = ['moseId', 'servNombre' ,'moseServId', 'moseMoviId', 'mosePeriodo', 'moseKM', 'moseFecha', 'acciones'];
   dataSource = new MatTableDataSource<MovilServicio>();
 
 
@@ -47,6 +47,7 @@ export class MovilServicioComponent implements OnInit {
 
     this.form = this.formBuilder.group({
         moseId: [''],
+        moseMoviId: [''],
         moseServId: [''],
         mosePeriodo: [''],
         moseKM: [''],
@@ -56,7 +57,7 @@ export class MovilServicioComponent implements OnInit {
         servNombre: [''],
     });
 
-    this.msService.get().subscribe(
+    this.msService.get(`moseMoviId=${this.moviId}`).subscribe(
       (ms) => {
         this.movilservicio = ms;
         this.actualizarTabla();
@@ -121,6 +122,9 @@ export class MovilServicioComponent implements OnInit {
 
     this.seleccionado.moseServId = this.servicios.find(grupo => grupo.servId == this.seleccionado.moseServId)!.servId;
     this.seleccionado.servNombre = this.servicios.find(grupo => grupo.servId == this.seleccionado.moseServId)!.servNombre;
+    this.seleccionado.mosePeriodo = this.servicios.find(servicio  => servicio.servId == this.seleccionado.moseServId)!.servPeriodo;
+    this.seleccionado.moseKM = this.servicios.find(servicio  => servicio.servId == this.seleccionado.moseServId)!.servKM;
+    this.seleccionado.moseFecha = this.servicios.find(servicio  => servicio.servId == this.seleccionado.moseServId)!.servFecha;
 
     if(this.seleccionado.moseId){
       this.msService.put(this.seleccionado).subscribe((movilservicio)=>{
