@@ -78,12 +78,12 @@ class MovilGrilla
         
         $stmt = SQL::query($db,
         "UPDATE $this->table
-        SET moviNombre = ?
-            ,moviDescripcion = ?
+        SET moviModoOdometro = ?
+            ,moviModoFecha = ?
         WHERE moviId = ?",
         [
-            DATA["moviNombre"],
-            DATA["moviDescripcion"],
+            DATA["moviModoOdometro"],
+            DATA["moviModoFecha"],
             DATA["moviId"]
         ] );
 

@@ -9,6 +9,8 @@ import { MovilGrupoService } from 'src/app/servicios/movil_grupo.service';
 import { MovilServicioService } from 'src/app/servicios/movil_servicio.service';
 import { MovilG } from 'src/app/modelo/movil-grilla';
 import { MovilGService } from 'src/app/servicios/movil-grilla.service';
+import {MatTabsModule} from '@angular/material/tabs';
+
 
 
 @Component({
@@ -66,19 +68,6 @@ export class MovilGComponent implements OnInit, AfterViewInit {
    this.dataSource.sort = this.sort;
   }
 
-  actualizarMG(id : number){
-    this.mS.movgru.forEach( (dato) => { dato.mogrMoviId = id;
-      if(dato.mogrBorrado){
-        this.mgService.delete(dato.mogrId).subscribe();
-      }else if(dato.mogrId < 0){
-        this.mgService.post(dato).subscribe();
-      }else (dato.mogrId > 0 )
-        this.mgService.put(dato).subscribe();
-      }
-   );
-    this.actualizar();
-    this.mostrarEditar = false;
-  }
 
   agregar() {
     this.formulario.reset();

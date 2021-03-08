@@ -149,19 +149,48 @@
                             
                         </div>
                     </div>
-    
-                    <br>
-    
+     
+
                     <div style="text-align: center;">
-                        <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
-                        &nbsp;
                         <button mat-raised-button (click)="cancelar()">Cancelar</button>
                     </div>
-                </form> <br>
-                <div *ngIf="movilSelected && movilSelected.moviId && mostrarManten">
-                    <app-movil-servicio [moviId]="movilSelected.moviId"></app-movil-servicio>
-                </div>
 
+                    <br>
+
+                    <mat-tab-group mat-align-tabs="center">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon">miscellaneous_services</mat-icon>
+                                Servicios
+                            </ng-template>
+                            <div *ngIf="movilSelected && movilSelected.moviId">
+                                <app-movil-servicio [moviId]="movilSelected.moviId"></app-movil-servicio>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon">speed</mat-icon>
+                                Odometro
+                            </ng-template>
+                            <div *ngIf="movilSelected && movilSelected.moviId">
+                                <app-movil-odometro [moviId]="movilSelected.moviId"></app-movil-odometro>
+                            </div>
+                        
+                        </mat-tab>
+                            
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon">library_books</mat-icon>
+                                Bitacora
+                            </ng-template>
+                        </mat-tab>
+                      </mat-tab-group>
+
+                      
+                    
+
+                </form> <br>
+               
             </div>
     </div>
 </div>

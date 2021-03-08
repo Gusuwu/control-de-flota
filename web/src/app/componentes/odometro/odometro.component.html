@@ -1,0 +1,69 @@
+<br>
+        <div [hidden]="mostrarFormulario">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                <mat-text-column name="modoId" headerText="ID"></mat-text-column>
+                <mat-text-column name="modoMoviId" headerText="ID Movil"></mat-text-column>
+                <mat-text-column name="modoFecha" headerText="Fecha"></mat-text-column>
+                <mat-text-column name="modoOdometro" headerText="Odometro"></mat-text-column>
+                
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let odometro">
+                        <button mat-raised-button color="accent" title="editar" (click)="editar(odometro)">
+                            Editar
+                        </button>
+                        <button style="margin-left: 0.2cm;" mat-raised-button color="warn" title="borrar" (click)="delete(odometro)">
+                            Borrar
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Sin items todavia...</td>
+                </tr>
+            </table>
+
+            <div style="text-align: center;">
+                <button mat-raised-button color="primary" (click)="agregar()">Agregar</button>
+            </div>
+        </div>
+
+        <div *ngIf="mostrarFormulario">
+
+            <form [formGroup]="form">
+
+                <div [hidden]="true">
+                    <input type="text" formControlName="modoMoviId" [(ngModel)]="moviId"> 
+                </div>
+
+                <div style="text-align: center;">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Seleccione una fecha</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="modoFecha" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+                      </mat-form-field>
+                </div>
+
+                <div style="text-align: center;">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Odometro</mat-label>
+                        <input matInput type="number" formControlName="modoOdometro" required>
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div style="text-align: center;">
+                    <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                    &nbsp;
+                    <button mat-raised-button type="submit" (click)="cancelar()">Cancelar</button>
+                </div>
+            </form>
+
+        </div>
+    

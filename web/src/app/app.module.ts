@@ -32,6 +32,10 @@ import { MovilComponent } from './componentes/movil-avl/movil.component';
 import { MovilGrupoComponent } from './componentes/movil_grupo/movil_grupo.component';
 import { MovilServicioComponent } from './componentes/movil_servicio/movil_servicio.component';
 import { MovilGComponent } from './componentes/movil/movil.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { MovilOdometro } from './modelo/odometro';
+import { MovilOdometroComponent } from './componentes/odometro/odometro.component';
+
 
   
 
@@ -49,6 +53,7 @@ import { MovilGComponent } from './componentes/movil/movil.component';
     MovilServicioComponent,
     ConfirmarComponent,
     MovilGComponent,
+    MovilOdometroComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +76,8 @@ import { MovilGComponent } from './componentes/movil/movil.component';
     MatNativeDateModule,
     MatOptionModule,
     MatSelectModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTabsModule
   ],
   providers: [
     AppConfigService,

@@ -50,6 +50,7 @@ include_once 'controllers/movil.php';
 include_once 'controllers/movil_grilla.php';
 include_once 'controllers/movil_grupo.php';
 include_once 'controllers/movil_servicio.php';
+include_once 'controllers/movil_odometro.php';
 
 
 $app->get('/', function (Request $request, Response $response, $args) {
