@@ -35,6 +35,7 @@ export class MovilGComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort! : MatSort;
 
   movilSelected = new MovilG();
+  movil = new MovilG();
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -112,7 +113,26 @@ export class MovilGComponent implements OnInit, AfterViewInit {
     this.mostrarGrilla = false;
   }
 
+  agregarOdometro(seleccionado : MovilG) {
+    this.formulario.reset();
+    this.movil.moviId = seleccionado.movilID;
+    if (this.movil.moviId) {
+        this.mS.post(this.movil)
+          .subscribe((movil) => {
+            this.moviles.push(movil);                
+          });
+
+    }
+    }
+
   cancelar() {
+
+    if(this.movilSelected.moviId == this.mS.id){
+      this.movilSelected.moviModoFecha = this.mS.fecha;
+      this.movilSelected.moviModoOdometro = this.mS.odometro;
+      this.agregarOdometro(this.movilSelected);
+    }
+
     this.mostrarEditar = false;
     this.mostrarManten = false;
     this.mostrarAgregar = false;

@@ -24,9 +24,11 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8888/index.php/movil HTTP/1.1
+PUT http://localhost:8888/index.php/movil_grilla HTTP/1.1
 
 {
-  "moviId" : 1,
+  "moviId" : 16,
+  "moviModoOdometro" : 50000,
+  
   }
 

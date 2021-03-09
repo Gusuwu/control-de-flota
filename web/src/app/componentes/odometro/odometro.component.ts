@@ -61,9 +61,9 @@ export class MovilOdometroComponent implements OnInit {
     this.ms.get().subscribe(
         (movil) => {
           this.moviles = movil;
-         
         }
       )
+
 
 
   }
@@ -119,9 +119,6 @@ export class MovilOdometroComponent implements OnInit {
 
     Object.assign(this.seleccionado, this.form.value);
 
-    this.movil.moviModoOdometro = this.seleccionado.modoOdometro;
-    this.movil.moviModoFecha = this.seleccionado.modoFecha;
-
     if(this.seleccionado.modoId){
       this.odometroService.put(this.seleccionado).subscribe((movilgrupo)=>{
         this.mostrarFormulario = false;
@@ -133,6 +130,23 @@ export class MovilOdometroComponent implements OnInit {
           this.mostrarFormulario = false;
           this.actualizarTabla();
         });
+    }
+    
+    this.movil.moviId = this.moviId;
+    this.movil.moviModoOdometro = this.odometros.find(servicio => servicio.modoMoviId == this.movil.moviId)!.modoOdometro;
+    this.movil.moviModoFecha = this.odometros.find(servicio => servicio.modoMoviId == this.movil.moviId)!.modoFecha;
+
+    if(this.movil.moviId){
+
+    const pos = this.moviles.findIndex(movil => movil.moviId == this.movil.moviId);
+
+    this.ms.put(this.movil).subscribe((movil) => {
+      this.moviles.splice(pos!, 1, this.movil);
+      this.ms.id = this.movil.moviId;
+      this.ms.odometro = this.movil.moviModoOdometro;
+      this.ms.fecha = this.movil.moviModoFecha;               
+    });
+
     }
    
   }

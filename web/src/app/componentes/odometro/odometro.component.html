@@ -42,12 +42,13 @@
                 </div>
 
                 <div style="text-align: center;">
-                    <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-form-field appearance="fill">
                         <mat-label>Seleccione una fecha</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="modoFecha" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+                        <mat-datepicker #picker></mat-datepicker>
                       </mat-form-field>
+                      
                 </div>
 
                 <div style="text-align: center;">
