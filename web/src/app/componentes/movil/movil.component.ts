@@ -114,8 +114,7 @@ export class MovilGComponent implements OnInit, AfterViewInit {
   }
 
   agregarOdometro(seleccionado : MovilG) {
-    this.formulario.reset();
-    this.movil.moviId = seleccionado.movilID;
+    this.movil.moviId = seleccionado.moviId;
     if (this.movil.moviId) {
         this.mS.post(this.movil)
           .subscribe((movil) => {
