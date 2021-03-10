@@ -18,9 +18,7 @@ extends ApiService<MovilG>{
 
   movgru : MovilGrupo[] = [];
   movser : MovilServicio[] = [];
-  odometro : number = 0; 
-  fecha : Date = new Date();
-  id : number = 0;
+  odometro = new MovilG();
   
 
   constructor(

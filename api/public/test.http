@@ -1,7 +1,7 @@
 
 ### PEDIDO
 
-GET http://localhost:8888/index.php/movil HTTP/1.1
+GET http://localhost:8888/index.php/servicio HTTP/1.1
 
 ###
 
@@ -24,11 +24,13 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8888/index.php/movil_grilla HTTP/1.1
+PUT http://localhost:8888/index.php/grupo HTTP/1.1
 
 {
-  "moviId" : 16,
-  "moviModoOdometro" : 50000,
+  "servId" : 4,
+  "servPeriodo": 20,
+  "servKM": 0,
+  "servFecha": 0,
   
   }
 

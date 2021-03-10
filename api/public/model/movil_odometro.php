@@ -13,15 +13,18 @@ class MovilOdometro
     public $join = "LEFT OUTER JOIN Movil ON modoMoviId = moviId";
     
     public function get ($db) {
-        $sql = "SELECT $this->fields FROM $this->table
+        $sql = "SELECT TOP 5 $this->fields FROM $this->table
                 $this->join
                 WHERE modoBorrado = 0";
 
         $params = null;
         if (isset( $_GET["modoMoviId"])){
              $params = [$_GET["modoMoviId"]];
-            $sql = $sql . " AND modoMoviId = ? ";
+            $sql = $sql . " AND modoMoviId = ?";
         };
+
+        $sql = $sql . " ORDER BY modoId desc";
+
 
         $stmt = SQL::query($db, $sql, $params);
         $results = [];
@@ -52,8 +55,10 @@ class MovilOdometro
         ,modoBorrado)
         VALUES (?,?,?,GETDATE(),0);
 
-        SELECT @@IDENTITY modoId, CONVERT(VARCHAR, GETDATE(), 126) modoFechaAlta;",
-        [DATA["modoMoviId"], DATA["modoFecha"],DATA["modoOdometro"]] );
+        SELECT @@IDENTITY modoId, CONVERT(VARCHAR, GETDATE(), 126) modoFechaAlta;
+        
+        UPDATE Movil SET moviModoOdometro = ?, moviModoFecha = ? WHERE moviId = ?;",
+        [DATA["modoMoviId"], DATA["modoFecha"],DATA["modoOdometro"], DATA["modoOdometro"], DATA["modoFecha"],DATA["modoMoviId"]] );
 
         sqlsrv_fetch($stmt); // INSERT
         sqlsrv_next_result($stmt);// SELECT @@IDENTITY

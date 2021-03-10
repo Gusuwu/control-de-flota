@@ -115,21 +115,20 @@ export class MovilGComponent implements OnInit, AfterViewInit {
 
   agregarOdometro(seleccionado : MovilG) {
     this.movil.moviId = seleccionado.moviId;
-    if (this.movil.moviId) {
-        this.mS.post(this.movil)
-          .subscribe((movil) => {
-            this.moviles.push(movil);                
-          });
-
-    }
+   
     }
 
   cancelar() {
 
-    if(this.movilSelected.moviId == this.mS.id){
-      this.movilSelected.moviModoFecha = this.mS.fecha;
-      this.movilSelected.moviModoOdometro = this.mS.odometro;
-      this.agregarOdometro(this.movilSelected);
+    if(this.movilSelected.moviId == this.mS.odometro.moviId){
+      this.movilSelected.moviModoFecha = this.mS.odometro.moviModoFecha;
+      this.movilSelected.moviModoOdometro = this.mS.odometro.moviModoOdometro;
+  
+      this.mS.put(this.movilSelected)
+          .subscribe((movil) => {
+            const pos = this.moviles.findIndex(movil => movil.moviId == this.movil.moviId);
+            this.moviles.splice(pos, 1, this.movilSelected);                
+          });
     }
 
     this.mostrarEditar = false;
