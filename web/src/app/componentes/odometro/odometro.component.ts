@@ -128,21 +128,43 @@ export class MovilOdometroComponent implements OnInit {
 
     if(elemento > this.seleccionado.modoOdometro){
       this.dialog.open(AlertaComponent);
-    }else{
+    }else if (this.seleccionado.modoOdometro >= 1000){
+        const dialogRef = this.dialog.open(ConfirmarComponent);
 
+        dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+
+        if(result){
+          if(this.seleccionado.modoId){
+            this.odometroService.put(this.seleccionado).subscribe((movilodometro)=>{
+            this.mostrarFormulario = false;
+            });
+          }else{
+            this.odometroService.post(this.seleccionado)
+            .subscribe((movilodometro) => {
+              this.odometros.push(movilodometro);
+              this.mostrarFormulario = false;
+              this.actualizarTabla();
+            });
+          }
+       
+        }
+
+      });
+      
+    }else{
       if(this.seleccionado.modoId){
         this.odometroService.put(this.seleccionado).subscribe((movilodometro)=>{
-          this.mostrarFormulario = false;
+        this.mostrarFormulario = false;
         });
       }else{
         this.odometroService.post(this.seleccionado)
-          .subscribe((movilodometro) => {
-            this.odometros.push(movilodometro);
-            this.mostrarFormulario = false;
-            this.actualizarTabla();
-          });
+        .subscribe((movilodometro) => {
+          this.odometros.push(movilodometro);
+          this.mostrarFormulario = false;
+          this.actualizarTabla();
+        });
       }
-
     }
     this.actualizarTabla();
   }

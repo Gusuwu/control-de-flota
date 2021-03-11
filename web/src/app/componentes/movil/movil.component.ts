@@ -56,6 +56,10 @@ export class MovilGComponent implements OnInit, AfterViewInit {
       moviFechaAlta: [''],
     });
 
+    this.actualizarServicios();
+  }
+
+  actualizarServicios(){
     this.mS.get().subscribe(
       (movil) => {
         this.moviles = movil;
@@ -126,16 +130,21 @@ export class MovilGComponent implements OnInit, AfterViewInit {
   
       this.mS.put(this.movilSelected)
           .subscribe((movil) => {
-            const pos = this.moviles.findIndex(movil => movil.moviId == this.movil.moviId);
-            this.moviles.splice(pos, 1, this.movilSelected);                
+            //const pos = this.moviles.findIndex(movil => movil.moviId == this.movil.moviId);
+            //this.moviles.splice(pos, 1, this.movilSelected);            
           });
+    
     }
 
+    this.actualizarServicios(); 
+    
+    
     this.mostrarEditar = false;
     this.mostrarManten = false;
     this.mostrarAgregar = false;
     this.mostrarGrilla = false;
     this.actualizar();
+
   }
 
 
