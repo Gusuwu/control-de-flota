@@ -35,6 +35,7 @@ import { MovilGComponent } from './componentes/movil/movil.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MovilOdometro } from './modelo/odometro';
 import { MovilOdometroComponent } from './componentes/odometro/odometro.component';
+import { AlertaComponent } from './shared/alerta/alerta.component';
 
 
   
@@ -52,6 +53,7 @@ import { MovilOdometroComponent } from './componentes/odometro/odometro.componen
     MovilGrupoComponent,
     MovilServicioComponent,
     ConfirmarComponent,
+    AlertaComponent,
     MovilGComponent,
     MovilOdometroComponent,
   ],

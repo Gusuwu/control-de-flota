@@ -6,6 +6,7 @@ import { MovilG } from 'src/app/modelo/movil-grilla';
 import { MovilOdometro } from 'src/app/modelo/odometro';
 import { MovilGService } from 'src/app/servicios/movil-grilla.service';
 import { MovilOdometroService } from 'src/app/servicios/odometro.service';
+import { AlertaComponent } from 'src/app/shared/alerta/alerta.component';
 import { ConfirmarComponent } from 'src/app/shared/confirmar/confirmar.component';
 import { DatosService } from 'src/app/shared/datos/datos.service';
 
@@ -84,7 +85,7 @@ export class MovilOdometroComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmarComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    console.log(`Dialog result: ${result}`);
 
       if(result){
         this.odometroService.delete(fila.modoId)
@@ -123,21 +124,27 @@ export class MovilOdometroComponent implements OnInit {
     this.ms.odometro.moviModoOdometro = this.seleccionado.modoOdometro;
     this.ms.odometro.moviModoFecha = this.seleccionado.modoFecha;
     
-    if(this.seleccionado.modoId){
-      this.odometroService.put(this.seleccionado).subscribe((movilgrupo)=>{
-        this.mostrarFormulario = false;
-      });
-    }else{
-      this.odometroService.post(this.seleccionado)
-        .subscribe((movilgrupo) => {
-          this.odometros.push(movilgrupo);
-          this.mostrarFormulario = false;
-          this.actualizarTabla();
-        });
-    }
-    
-    
+    const elemento = this.odometros.find(odo => odo.modoMoviId == this.seleccionado.modoMoviId)!.modoOdometro;
 
+    if(elemento > this.seleccionado.modoOdometro){
+      this.dialog.open(AlertaComponent);
+    }else{
+
+      if(this.seleccionado.modoId){
+        this.odometroService.put(this.seleccionado).subscribe((movilodometro)=>{
+          this.mostrarFormulario = false;
+        });
+      }else{
+        this.odometroService.post(this.seleccionado)
+          .subscribe((movilodometro) => {
+            this.odometros.push(movilodometro);
+            this.mostrarFormulario = false;
+            this.actualizarTabla();
+          });
+      }
+
+    }
+    this.actualizarTabla();
   }
   cancelar() {
     this.mostrarFormulario = false;
