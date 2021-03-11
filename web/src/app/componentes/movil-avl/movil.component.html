@@ -61,6 +61,11 @@
         
 <div *ngIf="mostrarFormulario">
 
-    <h2 style="text-align: center;">Movil agregado con exito!</h2>
+    <h2 style="text-align: center;">Agregar un grupo al movil</h2>
+    <br>
+    <h2 style="text-align: center;">Lista de grupos del movil</h2>
+    <div *ngIf="movil && movil.moviId && mostrarFormulario">
+        <app-movil-grupo [moviId]="movil.moviId"></app-movil-grupo>
+    </div>
 
 </div>

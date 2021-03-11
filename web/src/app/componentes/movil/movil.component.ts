@@ -138,7 +138,6 @@ export class MovilGComponent implements OnInit, AfterViewInit {
 
     this.actualizarServicios(); 
     
-    
     this.mostrarEditar = false;
     this.mostrarManten = false;
     this.mostrarAgregar = false;

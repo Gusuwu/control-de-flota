@@ -89,11 +89,13 @@ export class MovilComponent implements OnInit, AfterViewInit {
           .subscribe((movil) => {
             this.movilesG.push(movil);                
           });
-
+        this.msG.odometro = this.movil;          
     }
 
-     this.mostrarFormulario = true;
-    }
+    
+
+    this.mostrarFormulario = true;
+  }
 
   
 
