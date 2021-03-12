@@ -28,7 +28,7 @@ export class MovilComponent implements OnInit, AfterViewInit {
 
   moviles : Movil [] = [];
   movilesG : MovilG [] = [];
-  columnas: string[] = ['movilID', 'patente','descripcion','marca','modelo', 'dependencia', 'acciones'];
+  columnas: string[] = ['movilID', 'patente','marca','modelo',  'acciones'];
   dataSource = new MatTableDataSource<Movil>();
   
   formulario = new FormGroup({});

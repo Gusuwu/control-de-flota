@@ -3,10 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Grupo } from 'src/app/modelo/grupo';
+import { GrupoServicio } from 'src/app/modelo/grupo_servicio';
 import { MovilGrupo } from 'src/app/modelo/movil_grupo';
+import { MovilServicio } from 'src/app/modelo/movil_servicio';
+import { Servicio } from 'src/app/modelo/servicio';
 import { GrupoService } from 'src/app/servicios/grupo.service';
+import { GrupoServicioService } from 'src/app/servicios/grupo_servicio.service';
 import { MovilGService } from 'src/app/servicios/movil-grilla.service';
 import { MovilGrupoService } from 'src/app/servicios/movil_grupo.service';
+import { MovilServicioService } from 'src/app/servicios/movil_servicio.service';
+import { ServicioService } from 'src/app/servicios/servicio.service';
 import { ConfirmarComponent } from 'src/app/shared/confirmar/confirmar.component';
 import { DatosService } from 'src/app/shared/datos/datos.service';
 
@@ -32,6 +38,13 @@ export class MovilGrupoComponent implements OnInit {
   mostrarFormulario = false;
 
   grupos: Grupo[] = [];
+  gruposervcio = new GrupoServicio();
+  gruposservicios : GrupoServicio[] = [];
+  movilservicio =new MovilServicio();
+  movilesservicios : MovilServicio[] = [];
+  servicios : Servicio[] = [];
+
+
   //idAux: number = -1;
   
 
@@ -40,7 +53,10 @@ export class MovilGrupoComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     public datosService: DatosService,
-    public ms : MovilGService) { }
+    public ms : MovilGService,
+    public movilServicioService : MovilServicioService,
+    public grupoServicioService: GrupoServicioService,
+    public servicioService : ServicioService) { }
 
 
   ngOnInit(): void {
@@ -61,11 +77,32 @@ export class MovilGrupoComponent implements OnInit {
       }
     );
 
+    this.movilServicioService.get(`moseMoviId=${this.moviId}`).subscribe(
+      (movilservicio) => {
+        this.movilesservicios = movilservicio;
+        this.actualizarTabla();
+      }
+    );
+
     this.grupoService.get().subscribe(
       (grupo) => {
         this.grupos = grupo;
       }
     )
+
+    this.grupoServicioService.get().subscribe(
+      (grupserv) => {
+        this.gruposservicios=grupserv
+      }
+    )
+
+    this.servicioService.get().subscribe(
+      (movilservicio) => {
+        this.servicios = movilservicio;
+      }
+    );
+
+
   }
 
   actualizarTabla() {
@@ -136,6 +173,39 @@ export class MovilGrupoComponent implements OnInit {
           this.mostrarFormulario = false;
           this.actualizarTabla();
         });
+
+
+      
+
+        
+      let aux = this.gruposservicios.filter(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!;
+
+      let idgservicio = this.gruposservicios.find(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!.grusServId;
+      
+      for(let i = 0 ;i < aux.length; i++ ){
+        
+        if(idgservicio != (aux.find(grupo => grupo.grusServId == idgservicio)!.grusServId)){
+          idgservicio += 1;
+        }else{
+
+        this.movilservicio.moseServId = idgservicio;
+        this.movilservicio.moseMoviId = this.seleccionado.mogrMoviId
+        this.movilservicio.moseKM = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servKM;
+        this.movilservicio.mosePeriodo = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servPeriodo;
+        this.movilservicio.moseFecha = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servFecha;
+
+        if(this.movilservicio.moseMoviId == this.seleccionado.mogrMoviId){
+          this.movilServicioService.post(this.movilservicio).subscribe((movilservicio) => {this.movilesservicios.push(movilservicio);
+          this.mostrarFormulario = false;});
+         } 
+        idgservicio += 1;
+        }
+        
+        
+
+      }
+
+      
     }
    
   }
