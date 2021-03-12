@@ -106,10 +106,10 @@ export class MovilComponent implements OnInit, AfterViewInit {
           });
          this.msG.odometro = this.movil;
       }
-                   
+     this.mostrarFormulario = true;              
     }
 
-    this.mostrarFormulario = true;
+    
   }
 
   
