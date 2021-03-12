@@ -83,16 +83,31 @@ export class MovilComponent implements OnInit, AfterViewInit {
 
   agregar(seleccionado : Movil) {
     this.formulario.reset();
-    this.movil.moviId = seleccionado.movilID;
+    
+    if(seleccionado.moviId == null){
+      this.movil.moviId = seleccionado.movilID;
+    }else if(seleccionado.moviId && !seleccionado.moviBorrado){
+        alert("El movil seleccionado ya está en control de flota");
+    }else{
+      this.movil.moviId = seleccionado.movilID;
+    }
+
     if (this.movil.moviId) {
+
+      if(seleccionado.moviBorrado){
+        this.movil.moviBorrado = !seleccionado.moviBorrado;
+        this.msG.put(this.movil)
+        .subscribe((movil) => {             
+        });
+      }else{
         this.msG.post(this.movil)
           .subscribe((movil) => {
             this.movilesG.push(movil);                
           });
-        this.msG.odometro = this.movil;          
+         this.msG.odometro = this.movil;
+      }
+                   
     }
-
-    
 
     this.mostrarFormulario = true;
   }

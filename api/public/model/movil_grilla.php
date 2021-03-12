@@ -73,17 +73,17 @@ class MovilGrilla
     }
 
     public function put ($db) {
-        // TODO
-        return;
-        
+       
         $stmt = SQL::query($db,
         "UPDATE $this->table
         SET moviModoOdometro = ?
             ,moviModoFecha = ?
+            ,moviBorrado = ?
         WHERE moviId = ?",
         [
             DATA["moviModoOdometro"],
             DATA["moviModoFecha"],
+            DATA["moviBorrado"],
             DATA["moviId"]
         ] );
 
