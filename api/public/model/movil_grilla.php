@@ -39,6 +39,11 @@ class MovilGrilla
 
         $params = null;
 
+        if (isset( $_GET["patente"])){
+            $params = ["%" . $_GET["patente"] . "%"];
+            $sql = $sql . " AND A.patente LIKE ? ";
+        };
+
         $stmt = SQL::query($db, $sql, $params);
         $results = [];
         while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {

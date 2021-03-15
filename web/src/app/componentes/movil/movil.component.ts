@@ -73,6 +73,21 @@ export class MovilGComponent implements OnInit, AfterViewInit {
    this.dataSource.sort = this.sort;
   }
 
+  filtroPatente(patente:string): MovilG[]{
+
+    let elementos = this.moviles;
+    let movil = elementos.filter( elemento => elemento.patente == patente);
+    return movil;
+  }
+
+  movilPatente(patente:string){
+    this.mS.get(patente).subscribe(
+      (movil) => {
+        this.moviles = this.filtroPatente(patente);
+        this.actualizar();
+      }
+    )
+  }
 
   agregar() {
     this.formulario.reset();

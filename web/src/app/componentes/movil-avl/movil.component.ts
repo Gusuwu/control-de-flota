@@ -81,6 +81,8 @@ export class MovilComponent implements OnInit, AfterViewInit {
   }
 
 
+  
+
   agregar(seleccionado : Movil) {
     this.formulario.reset();
     
