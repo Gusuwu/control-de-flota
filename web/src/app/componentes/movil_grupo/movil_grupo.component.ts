@@ -174,20 +174,19 @@ export class MovilGrupoComponent implements OnInit {
           this.actualizarTabla();
         });
 
-
-      
-
-        
       let aux = this.gruposservicios.filter(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!;
 
       let idgservicio = this.gruposservicios.find(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!.grusServId;
+
+      let length = aux.length
       
-      for(let i = 0 ;i < aux.length; i++ ){
+      for(let i = 0 ; i <= length; i++ ){
+        
         
         if(idgservicio != (aux.find(grupo => grupo.grusServId == idgservicio)!.grusServId)){
           idgservicio += 1;
         }else{
-
+        
         this.movilservicio.moseServId = idgservicio;
         this.movilservicio.moseMoviId = this.seleccionado.mogrMoviId
         this.movilservicio.moseKM = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servKM;
@@ -198,13 +197,13 @@ export class MovilGrupoComponent implements OnInit {
           this.movilServicioService.post(this.movilservicio).subscribe((movilservicio) => {this.movilesservicios.push(movilservicio);
           this.mostrarFormulario = false;});
          } 
-        idgservicio += 1;
+        //idgservicio += 1;
+        aux.shift();
         }
-        
-        
+
+        idgservicio = aux.find(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!.grusServId;
 
       }
-
       
     }
    

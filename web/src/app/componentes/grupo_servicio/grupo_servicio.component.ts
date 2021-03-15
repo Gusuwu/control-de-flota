@@ -120,11 +120,9 @@ export class GrupoServicioComponent implements OnInit {
     this.seleccionado.grusKM = this.servicios.find(servicio  => servicio.servId == this.seleccionado.grusServId)!.servKM;
     this.seleccionado.grusFecha = this.servicios.find(servicio  => servicio.servId == this.seleccionado.grusServId)!.servFecha;
 
-    debugger
-
     if(this.seleccionado.grusId > 0){
       const elemento = this.gruposervicios.find(gruser => gruser.grusId == this.seleccionado.grusId);
-      this.gruposervicios.splice(this.seleccionado.grusId, 1, elemento!);
+      this.gruposervicios.splice(this.seleccionado.grusId, 0, elemento!);
     }else{
       this.datosService.gruser.push(this.seleccionado);
     }
