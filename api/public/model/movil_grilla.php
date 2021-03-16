@@ -40,9 +40,20 @@ class MovilGrilla
         $params = null;
 
         if (isset( $_GET["patente"])){
-            $params = ["%" . $_GET["patente"] . "%"];
+            $params[] = ["%" . $_GET["patente"] . "%"];
             $sql = $sql . " AND A.patente LIKE ? ";
         };
+
+        if (isset( $_GET["descripcion"])){
+            $params[] = ["%" . $_GET["descripcion"] . "%"];
+            $sql = $sql . " AND A.descripcion LIKE ? ";
+        };
+
+        if (isset( $_GET["dependencia"])){
+            $params[] = ["%" . $_GET["dependencia"] . "%"];
+            $sql = $sql . " AND C.Nombre LIKE ? ";
+        };
+
 
         $stmt = SQL::query($db, $sql, $params);
         $results = [];

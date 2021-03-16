@@ -174,34 +174,40 @@ export class MovilGrupoComponent implements OnInit {
           this.actualizarTabla();
         });
 
+      // arreglo con los servicios del grupo
       let aux = this.gruposservicios.filter(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!;
 
-      let idgservicio = this.gruposservicios.find(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!.grusServId;
+      // id del primer servicio del grupo
+      let idservicio = this.gruposservicios.find(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!.grusServId;
 
+      // longitud del arreglo
       let length = aux.length
       
+      //recorro la logitud del arreglo e inserto movil servicio con la id del servicio del primer grupo y al final borro este servicio del arreglo
+      //así guardo la id del siguiente servicio en el arreglo en la variable idgservicio
       for(let i = 0 ; i <= length; i++ ){
-        
-        
-        if(idgservicio != (aux.find(grupo => grupo.grusServId == idgservicio)!.grusServId)){
-          idgservicio += 1;
+
+        if(idservicio != (aux.find(grupo => grupo.grusServId == idservicio)!.grusServId)){
+          idservicio += 1;
         }else{
         
-        this.movilservicio.moseServId = idgservicio;
-        this.movilservicio.moseMoviId = this.seleccionado.mogrMoviId
-        this.movilservicio.moseKM = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servKM;
-        this.movilservicio.mosePeriodo = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servPeriodo;
-        this.movilservicio.moseFecha = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servFecha;
+          // seteo los valores para los campos
+          this.movilservicio.moseServId = idservicio;
+          this.movilservicio.moseMoviId = this.seleccionado.mogrMoviId
+          this.movilservicio.moseKM = aux[i].grusKM; //this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servKM;
+          this.movilservicio.mosePeriodo = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servPeriodo;
+          this.movilservicio.moseFecha = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servFecha;
 
-        if(this.movilservicio.moseMoviId == this.seleccionado.mogrMoviId){
+          //inserto el movil servicio
           this.movilServicioService.post(this.movilservicio).subscribe((movilservicio) => {this.movilesservicios.push(movilservicio);
           this.mostrarFormulario = false;});
-         } 
-        //idgservicio += 1;
-        aux.shift();
+          
+          //borro el actual servicio del arreglo
+          aux.shift();
         }
 
-        idgservicio = aux.find(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!.grusServId;
+        //guardo el siguiente id para la siguiente pasada
+        idservicio = aux.find(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!.grusServId;
 
       }
       

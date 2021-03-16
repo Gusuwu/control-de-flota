@@ -36,6 +36,9 @@ export class MovilGComponent implements OnInit, AfterViewInit {
 
   movilSelected = new MovilG();
   movil = new MovilG();
+  patente : string = "";
+  descripcion : string = "";
+  dependencia : string = "";
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -73,20 +76,63 @@ export class MovilGComponent implements OnInit, AfterViewInit {
    this.dataSource.sort = this.sort;
   }
 
-  filtroPatente(patente:string): MovilG[]{
 
-    let elementos = this.moviles;
-    let movil = elementos.filter( elemento => elemento.patente == patente);
-    return movil;
-  }
-
-  movilPatente(patente:string){
-    this.mS.get(patente).subscribe(
-      (movil) => {
-        this.moviles = this.filtroPatente(patente);
+  busqueda(){
+    if(this.patente && !this.dependencia && !this.descripcion){
+      this.mS.get(`patente=${this.patente}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
         this.actualizar();
       }
-    )
+      )
+    }else if(!this.patente && !this.dependencia && this.descripcion){
+      this.mS.get(`descripcion=${this.descripcion}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else{
+      this.mS.get(`dependencia=${this.dependencia}`).subscribe(
+      (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }
+
+    if(this.patente && this.descripcion){
+      this.mS.get(`patente=${this.patente}&descripcion=${this.descripcion}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else if(this.patente && this.dependencia){
+      this.mS.get(`patente=${this.patente}&dependencia=${this.dependencia}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else if(this.dependencia && this.descripcion){
+      this.mS.get(`descripcion=${this.descripcion}&dependencia=${this.dependencia}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else if(this.patente && this.descripcion && this.dependencia){
+      this.mS.get(`patente=${this.patente}&descripcion=${this.descripcion}&dependencia=${this.dependencia}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else{
+
+    }
+    
   }
 
   agregar() {

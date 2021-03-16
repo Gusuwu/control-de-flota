@@ -6,9 +6,25 @@
         <mat-label >Busqueda</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: Teclado" #input>
         </mat-form-field>
-        
-    
-        
+
+        <div style="text-align: center;">
+            
+            <mat-form-field>
+                <input matInput type="text" placeholder="Patente" [(ngModel)]="patente">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="text" placeholder="Descripcion" [(ngModel)]="descripcion">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="text" placeholder="Dependencia" [(ngModel)]="dependencia">
+            </mat-form-field>
+
+            <button mat-raised-button (click)="busqueda()"> Buscar </button>
+            
+        </div>
+
             <table mat-table [dataSource]="dataSource" matSort>
         
                 <ng-container matColumnDef="moviId">
