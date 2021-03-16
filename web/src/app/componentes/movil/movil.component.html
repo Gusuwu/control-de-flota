@@ -2,29 +2,33 @@
     <br>
 <div *ngIf="!mostrarGrilla">
     
+    <!--
         <mat-form-field>
         <mat-label >Busqueda</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: Teclado" #input>
         </mat-form-field>
-
-        <div style="text-align: center;">
+-->
+        <div style="text-align: center;"><h2>Busqueda</h2></div>
+        <div  style="text-align: center;">
+            <div style="text-align: center; display:inline-flex;">
             
-            <mat-form-field>
-                <input matInput type="text" placeholder="Patente" [(ngModel)]="patente">
-            </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Patente" [(ngModel)]="patente">
+                </mat-form-field>
 
-            <mat-form-field>
-                <input matInput type="text" placeholder="Descripcion" [(ngModel)]="descripcion">
-            </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Descripcion" [(ngModel)]="descripcion">
+                </mat-form-field>
 
-            <mat-form-field>
-                <input matInput type="text" placeholder="Dependencia" [(ngModel)]="dependencia">
-            </mat-form-field>
-
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Dependencia" [(ngModel)]="dependencia">
+                </mat-form-field>    
+            </div>
             <button mat-raised-button (click)="busqueda()"> Buscar </button>
-            
         </div>
 
+
+        <div style="text-align: center;"><h2>Grilla de moviles</h2></div>
             <table mat-table [dataSource]="dataSource" matSort>
         
                 <ng-container matColumnDef="moviId">
