@@ -5,6 +5,10 @@
                 <mat-text-column name="setaServId" headerText="ID Servicio"></mat-text-column>
                 <mat-text-column name="setaTareId" headerText="ID Tarea"></mat-text-column>
                 <mat-text-column name="tareNombre" headerText="Nombre"></mat-text-column>
+                <mat-text-column name="tareDescripcion" headerText="Nombre"></mat-text-column>
+                <mat-text-column name="tareUnidadMedida" headerText="Nombre"></mat-text-column>
+                <mat-text-column name="tareCantidad" headerText="Nombre"></mat-text-column>
+                <mat-text-column name="tareCosto" headerText="Nombre"></mat-text-column>
                 
 
                 <ng-container matColumnDef="acciones">
@@ -43,7 +47,7 @@
                     <h2>Seleccione una tarea</h2>
                     <mat-form-field appearance="outline">
                         <mat-label>Tarea</mat-label>
-                        <mat-select formControlName="setaTareId" required>
+                        <mat-select formControlName="setaTareId" onchange="mostrarValores(this.value)" required>
                             <mat-option *ngFor="let tarea of tareas" [value]="tarea.tareId">
                                 {{tarea.tareNombre}}
                             </mat-option>
@@ -51,6 +55,48 @@
                         <mat-error>Selecciona una opcion valida</mat-error>
                     </mat-form-field>
                 </div>
+
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Descripcion</mat-label>
+                        <input matInput formControlName="tareDescripcion" [(ngModel)]="descripcion">  
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Unidad de Medida</mat-label>
+                        <mat-select formControlName="tareUnidadMedida">
+                            <mat-option value="cm3">Centimetros cubicos</mat-option>
+                            <mat-option value="L">Litros</mat-option>
+                            <mat-option value="g">Gramos</mat-option>
+                            <mat-option value="cm">Centimetro</mat-option>
+                            <mat-option value="mts">Metro</mat-option>
+                            <mat-option value="mL">Mililitro</mat-option>
+                          </mat-select>
+                          <mat-hint>Seleccione una</mat-hint>
+                            
+                          
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cantidad</mat-label>
+                        <input matInput type="number" formControlName="tareCantidad" >
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Costo</mat-label>
+                        <input matInput type="number" formControlName="tareCosto" >
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+                </div>
+
+
 
                 <div style="text-align: center;">
                     <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>

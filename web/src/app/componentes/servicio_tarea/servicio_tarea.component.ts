@@ -23,7 +23,7 @@ export class ServicioTareaComponent implements OnInit {
   serviciotareas: ServicioTarea[] = [];
   seleccionado = new ServicioTarea();
 
-  columnas: string[] = ['tareNombre', 'setaServId', 'setaTareId', 'acciones'];
+  columnas: string[] = ['tareNombre', 'tareDescripcion', 'tareUnidadMedida', 'tareCantidad', 'tareCosto', 'setaServId', 'setaTareId', 'acciones'];
   dataSource = new MatTableDataSource<ServicioTarea>();
 
 
@@ -32,6 +32,11 @@ export class ServicioTareaComponent implements OnInit {
 
   tareas: Tarea[] = [];
   idAux: number = -1;
+
+  descripcion : string = "";
+  medida : string = "";
+  cantidad : number = 0;
+  costo : number = 0;
   
 
   constructor(private servicioTareaService: ServicioTareaService,
@@ -50,6 +55,10 @@ export class ServicioTareaComponent implements OnInit {
       setaBorrado: [''],
       setaFechaAlta: [''],
       tareNombre: [''],
+      tareDescripcion: [''],
+      tareUnidadMedida: [''],
+      tareCantidad: [''],
+      tareCosto: [''],
     });
 
     this.servicioTareaService.get(`setaServId=${this.servId}`).subscribe(
@@ -104,6 +113,16 @@ export class ServicioTareaComponent implements OnInit {
 
   }
 
+  mostrarValores(id : number){
+    if(id != 0){
+
+      this.descripcion = this.tareas.find(tarea => tarea.tareId == id)!.tareDescripcion;
+      this.medida = this.tareas.find(tarea => tarea.tareId == id)!.tareUnidadMedida;
+      this.cantidad = this.tareas.find(tarea => tarea.tareId == id)!.tareCantidad;
+      this.costo = this.tareas.find(tarea => tarea.tareId == id)!.tareCosto;
+
+    }
+  }
 
   guardar() {
     if (!this.form.valid) {
@@ -113,6 +132,10 @@ export class ServicioTareaComponent implements OnInit {
     Object.assign(this.seleccionado, this.form.value);
 
     this.seleccionado.tareNombre = this.tareas.find(tarea => tarea.tareId == this.seleccionado.setaTareId)!.tareNombre;
+    this.seleccionado.tareDescripcion = this.tareas.find(tarea => tarea.tareId == this.seleccionado.setaTareId)!.tareDescripcion;
+    this.seleccionado.tareUnidadMedida = this.tareas.find(tarea => tarea.tareId == this.seleccionado.setaTareId)!.tareUnidadMedida;
+    this.seleccionado.tareCantidad = this.tareas.find(tarea => tarea.tareId == this.seleccionado.setaTareId)!.tareCantidad;
+    this.seleccionado.tareCosto = this.tareas.find(tarea => tarea.tareId == this.seleccionado.setaTareId)!.tareCosto;
 
     if(this.seleccionado.setaId > 0){
       const elemento = this.serviciotareas.find(sertar => sertar.setaId == this.seleccionado.setaId);

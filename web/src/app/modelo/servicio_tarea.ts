@@ -6,4 +6,8 @@ export class ServicioTarea {
     setaBorrado : boolean = false;
 
     tareNombre : string = "";
+    tareDescripcion: string = '';
+    tareUnidadMedida : string = '';
+    tareCantidad : number = 0;
+    tareCosto : number = 0;
 }
