@@ -1,5 +1,5 @@
 <br>
-        <div [hidden]="mostrarFormulario">
+        <div [hidden]="mostrarGrilla">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
                 <mat-text-column name="moseId" headerText="ID"></mat-text-column>
@@ -19,6 +19,10 @@
                         <button style="margin-left: 0.2cm;" mat-raised-button color="warn" title="borrar" (click)="delete(movser)">
                             Borrar
                         </button>
+                        <button style="margin-left: 0.2cm;" mat-raised-button color="primary" title="bitacora" (click)="realizar(movser)">
+                            Realizar
+                            
+                        </button>
                     </td>
                 </ng-container>
 
@@ -34,7 +38,7 @@
                 <button mat-raised-button color="primary" (click)="agregar()">Agregar</button>
             </div>
         </div>
-
+<div *ngIf="mostrarGrilla">
         <div *ngIf="mostrarFormulario">
 
             <form [formGroup]="form">
@@ -62,6 +66,13 @@
                     <button mat-raised-button type="submit" (click)="cancelar()">Cancelar</button>
                 </div>
             </form>
-
+            
         </div>
-    
+
+        <div *ngIf="mostrarBitacora">
+                                
+            <div *ngIf="seleccionado && seleccionado.moseMoviId">
+                <app-movil-bitacora [moviId]="seleccionado.moseMoviId" [mostrarForm]="variable" [mostrarTabla]="variable" ></app-movil-bitacora>
+            </div>
+        </div>
+</div>    

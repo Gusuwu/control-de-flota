@@ -26,7 +26,8 @@ import { DatosService } from 'src/app/shared/datos/datos.service';
 export class MovilGrupoComponent implements OnInit {
 
   @Input() moviId: number = 0;
-
+  @Input() mostrarTabla: boolean = false;
+  @Input() mostrarForm: boolean = false;
   movilgrupos: MovilGrupo[] = [];
   seleccionado = new MovilGrupo();
 
@@ -36,6 +37,7 @@ export class MovilGrupoComponent implements OnInit {
 
   form = new FormGroup({});
   mostrarFormulario = false;
+  mostrarGrilla = false;
 
   grupos: Grupo[] = [];
   gruposervcio = new GrupoServicio();
@@ -114,6 +116,8 @@ export class MovilGrupoComponent implements OnInit {
   }
 
   agregar() {
+    this.mostrarGrilla = true;
+    this.mostrarTabla = true;
     this.seleccionado = new MovilGrupo();
     this.form.setValue(this.seleccionado);
     this.mostrarFormulario = true;
@@ -145,8 +149,8 @@ export class MovilGrupoComponent implements OnInit {
 
   editar(seleccionado: MovilGrupo) {
     this.mostrarFormulario = true;
+    this.mostrarGrilla = true;
     this.seleccionado = seleccionado;
-    
     this.form.setValue(seleccionado);
 
   }
@@ -194,7 +198,7 @@ export class MovilGrupoComponent implements OnInit {
           // seteo los valores para los campos
           this.movilservicio.moseServId = idservicio;
           this.movilservicio.moseMoviId = this.seleccionado.mogrMoviId
-          this.movilservicio.moseKM = aux[i].grusKM; //this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servKM;
+          this.movilservicio.moseKM = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servKM;
           this.movilservicio.mosePeriodo = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servPeriodo;
           this.movilservicio.moseFecha = this.servicios.find(serv => serv.servId == this.movilservicio.moseServId)!.servFecha;
 
@@ -216,6 +220,8 @@ export class MovilGrupoComponent implements OnInit {
   }
   cancelar() {
     this.mostrarFormulario = false;
+    this.mostrarGrilla = false;
+    this.mostrarTabla = false;
   }
 
 

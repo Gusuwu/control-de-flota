@@ -33,6 +33,8 @@ export class ServicioTareaComponent implements OnInit {
   tareas: Tarea[] = [];
   idAux: number = -1;
 
+
+  seleccionadoSelect : number = 0;
   descripcion : string = "";
   medida : string = "";
   cantidad : number = 0;
@@ -113,15 +115,11 @@ export class ServicioTareaComponent implements OnInit {
 
   }
 
-  mostrarValores(id : number){
-    if(id != 0){
-
-      this.descripcion = this.tareas.find(tarea => tarea.tareId == id)!.tareDescripcion;
-      this.medida = this.tareas.find(tarea => tarea.tareId == id)!.tareUnidadMedida;
-      this.cantidad = this.tareas.find(tarea => tarea.tareId == id)!.tareCantidad;
-      this.costo = this.tareas.find(tarea => tarea.tareId == id)!.tareCosto;
-
-    }
+  mostrarValores(){
+      this.descripcion = this.tareas.find(tarea => tarea.tareId == this.seleccionadoSelect)!.tareDescripcion;
+      this.medida = this.tareas.find(tarea => tarea.tareId == this.seleccionadoSelect)!.tareUnidadMedida;
+      this.cantidad = this.tareas.find(tarea => tarea.tareId == this.seleccionadoSelect)!.tareCantidad;
+      this.costo = this.tareas.find(tarea => tarea.tareId == this.seleccionadoSelect)!.tareCosto;
   }
 
   guardar() {

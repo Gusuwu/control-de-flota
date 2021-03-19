@@ -37,7 +37,7 @@
         </div>
 
         <div *ngIf="mostrarFormulario">
-
+                
             <form [formGroup]="form">
 
                 <div [hidden]="true">
@@ -47,10 +47,10 @@
                     <h2>Seleccione una tarea</h2>
                     <mat-form-field appearance="outline">
                         <mat-label>Tarea</mat-label>
-                        <mat-select formControlName="setaTareId" onchange="mostrarValores(this.value)" required>
-                            <mat-option *ngFor="let tarea of tareas" [value]="tarea.tareId">
+                        <mat-select formControlName="setaTareId" [(ngModel)]="seleccionadoSelect" required>
+                            <mat-option *ngFor="let tarea of tareas" [value]="tarea.tareId" >
                                 {{tarea.tareNombre}}
-                            </mat-option>
+                            </mat-option >
                         </mat-select>
                         <mat-error>Selecciona una opcion valida</mat-error>
                     </mat-form-field>
@@ -59,7 +59,7 @@
                 <div>
                     <mat-form-field appearance="outline">
                         <mat-label>Descripcion</mat-label>
-                        <input matInput formControlName="tareDescripcion" [(ngModel)]="descripcion">  
+                        <input id="resultado" matInput formControlName="tareDescripcion" [(ngModel)]="descripcion">  
                         <mat-error>El campo no puede ser vacio</mat-error>
                     </mat-form-field>
                 </div>
@@ -84,14 +84,14 @@
                 <div>
                     <mat-form-field appearance="outline">
                         <mat-label>Cantidad</mat-label>
-                        <input matInput type="number" formControlName="tareCantidad" >
+                        <input matInput type="number" formControlName="tareCantidad" [(ngModel)]="cantidad">
                         <mat-error>El campo no puede ser vacio</mat-error>
                     </mat-form-field>
                 </div>
                 <div>
                     <mat-form-field appearance="outline">
                         <mat-label>Costo</mat-label>
-                        <input matInput type="number" formControlName="tareCosto" >
+                        <input matInput type="number" formControlName="tareCosto" [(ngModel)]="costo">
                         <mat-error>El campo no puede ser vacio</mat-error>
                     </mat-form-field>
                 </div>

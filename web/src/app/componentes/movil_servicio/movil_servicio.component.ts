@@ -24,13 +24,16 @@ export class MovilServicioComponent implements OnInit {
 
   movilservicio: MovilServicio[] = [];
   seleccionado = new MovilServicio();
+  variable = true;
 
   columnas: string[] = ['moseId', 'servNombre' ,'moseServId', 'moseMoviId', 'mosePeriodo', 'moseKM', 'moseFecha', 'acciones'];
   dataSource = new MatTableDataSource<MovilServicio>();
 
 
   form = new FormGroup({});
+  mostrarGrilla = false;
   mostrarFormulario = false;
+  mostrarBitacora= false;
 
   servicios: Servicio[] = [];
   idAux: number = -1;
@@ -103,6 +106,12 @@ export class MovilServicioComponent implements OnInit {
       }
 
       });
+  }
+
+  realizar(seleccionado: MovilServicio){
+    this.mostrarBitacora = true;
+    this.mostrarGrilla = true;
+    this.seleccionado = seleccionado;
   }
 
   editar(seleccionado: MovilServicio) {

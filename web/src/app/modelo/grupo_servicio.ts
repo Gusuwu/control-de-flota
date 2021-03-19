@@ -9,4 +9,5 @@ export class GrupoServicio {
     grusBorrado : boolean = false;
 
     servNombre : string = "";
+
 }

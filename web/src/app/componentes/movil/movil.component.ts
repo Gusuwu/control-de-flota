@@ -146,6 +146,7 @@ export class MovilGComponent implements OnInit, AfterViewInit {
     this.mostrarEditar = true;
     this.mostrarGrilla = true;
     this.movilSelected = seleccionado;
+    this.mS.odometro = seleccionado;
     this.formulario.setValue(seleccionado);
   }
 
@@ -153,6 +154,7 @@ export class MovilGComponent implements OnInit, AfterViewInit {
     this.mostrarManten = true;
     this.mostrarGrilla = true;
     this.movilSelected = seleccionado;
+    this.mS.odometro = seleccionado;
     this.formulario.setValue(seleccionado);
   }
 

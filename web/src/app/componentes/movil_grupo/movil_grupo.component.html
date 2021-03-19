@@ -1,5 +1,5 @@
 <br>
-        <div [hidden]="mostrarFormulario">
+        <div [hidden]="mostrarGrilla || mostrarTabla">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
                 <mat-text-column name="mogrId" headerText="ID"></mat-text-column>
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div *ngIf="mostrarFormulario">
+        <div *ngIf="mostrarFormulario || mostrarForm">
 
             <form [formGroup]="form">
 

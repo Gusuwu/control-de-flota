@@ -36,7 +36,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { MovilOdometro } from './modelo/odometro';
 import { MovilOdometroComponent } from './componentes/odometro/odometro.component';
 import { AlertaComponent } from './shared/alerta/alerta.component';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MovilBitacora } from './modelo/movil_bitacora';
+import { MovilBitacoraComponent } from './componentes/movil-bitacora/movil-bitacora.component';
 
   
 
@@ -56,6 +58,7 @@ import { AlertaComponent } from './shared/alerta/alerta.component';
     AlertaComponent,
     MovilGComponent,
     MovilOdometroComponent,
+    MovilBitacoraComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,8 @@ import { AlertaComponent } from './shared/alerta/alerta.component';
     MatOptionModule,
     MatSelectModule,
     MatToolbarModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSlideToggleModule,
   ],
   providers: [
     AppConfigService,

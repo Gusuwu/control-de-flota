@@ -26,6 +26,8 @@ export class MovilComponent implements OnInit, AfterViewInit {
 
   //@Input() moviId : number = 0;
 
+  variable = true;
+
   moviles : Movil [] = [];
   movilesG : MovilG [] = [];
   columnas: string[] = ['movilID', 'patente','marca','modelo',  'acciones'];
