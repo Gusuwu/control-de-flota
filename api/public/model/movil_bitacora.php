@@ -6,11 +6,11 @@ class MovilBitacora
             ,mobiMoviId
             ,mobiMoseId
             ,mobiServId
-            ,mobiFecha
+            ,CONVERT(VARCHAR, mobiFecha, 126) mobiFecha
             ,mobiObservaciones
             ,mobiOdometro
             ,mobiProximoOdometro
-            ,mobiProximaFecha
+            ,CONVERT(VARCHAR, mobiProximaFecha, 126) mobiProximaFecha
             ,mobiIdAnterior
             ,mobiIdSiguiente
             ,mobiPendiente
@@ -30,6 +30,7 @@ class MovilBitacora
             $sql = $sql . " AND mobiMoviId = ? ";
         };
 
+        $sql = $sql . " ORDER BY mobiId desc";
 
         $stmt = SQL::query($db, $sql, $params);
         $results = [];
@@ -51,8 +52,6 @@ class MovilBitacora
 
     public function post ($db) {
         
-       //file_put_contents("z_jsonGrupoServicio.txt",json_encode(DATA));
-       
         $stmt = SQL::query($db,
         "INSERT INTO $this->table
             (mobiMoviId
@@ -68,7 +67,7 @@ class MovilBitacora
             ,mobiPendiente
             ,mobiFechaAlta
             ,mobiBorrado)
-        VALUES (?,?,GETDATE(),0);
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,GETDATE(),0);
         SELECT @@IDENTITY mobiId, CONVERT(VARCHAR, GETDATE(), 126) mobiFechaAlta;",
         [ DATA["mobiMoviId"]
         ,DATA["mobiMoseId"]

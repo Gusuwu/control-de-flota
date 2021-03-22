@@ -70,9 +70,13 @@
         </div>
 
         <div *ngIf="mostrarBitacora">
+
+            <div style="text-align: center;">
+                <button mat-raised-button color="primary" (click)="volver()">Volver</button>
+            </div>
                                 
             <div *ngIf="seleccionado && seleccionado.moseMoviId">
-                <app-movil-bitacora [moviId]="seleccionado.moseMoviId" [mostrarForm]="variable" [mostrarTabla]="variable" ></app-movil-bitacora>
+                <app-movil-bitacora [moviId]="seleccionado.moseMoviId" [moseId]="seleccionado.moseId" [servId]="seleccionado.moseServId" [mostrarForm]="variable" [mostrarTabla]="variable" ></app-movil-bitacora>
             </div>
         </div>
 </div>    

@@ -20,5 +20,7 @@ extends ApiService<MovilServicio>{
     super("movil_servicio", http, app);
   }
 
+  moseSeleccionado = new MovilServicio();
+
 
 }

@@ -1,9 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { tick } from '@angular/core/testing';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { getMatFormFieldDuplicatedHintError } from '@angular/material/form-field';
 import { MatTableDataSource } from '@angular/material/table';
+import { audit } from 'rxjs/operators';
 import { Grupo } from 'src/app/modelo/grupo';
 import { GrupoServicio } from 'src/app/modelo/grupo_servicio';
+import { MovilG } from 'src/app/modelo/movil-grilla';
 import { MovilBitacora } from 'src/app/modelo/movil_bitacora';
 import { MovilGrupo } from 'src/app/modelo/movil_grupo';
 import { MovilServicio } from 'src/app/modelo/movil_servicio';
@@ -28,14 +32,17 @@ import { DatosService } from 'src/app/shared/datos/datos.service';
 export class MovilBitacoraComponent implements OnInit {
 
   @Input() moviId: number = 0;
+  @Input() moseId: number = 0;
+  @Input() servId: number = 0;
   @Input() mostrarForm :boolean = false;
   @Input() mostrarTabla : boolean = false;
 
   movilbitacora: MovilBitacora[] = [];
+  moviles : MovilG[] = [];
   seleccionado = new MovilBitacora();
   
 
-  columnas: string[] = ['mobiId', 'mobiMoviId', 'mobiMoseId','mobiFecha', 'mobiObservaciones', 'mobiOdometro', 'acciones'];
+  columnas: string[] = ['mobiFecha', 'mobiObservaciones','mobiProximoOdometro','mobiProximaFecha','mobiOdometro','mobiPendiente', 'acciones'];
   dataSource = new MatTableDataSource<MovilBitacora>();
 
 
@@ -46,6 +53,8 @@ export class MovilBitacoraComponent implements OnInit {
   constructor(private movilBitacoraService: MovilBitacoraService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
+    public movilService : MovilGService,
+    public movilservicioService : MovilServicioService
    ) { }
 
 
@@ -54,7 +63,7 @@ export class MovilBitacoraComponent implements OnInit {
     this.form = this.formBuilder.group({
         mobiId: [''],
         mobiMoviId: [''],
-        mobiMoseId: ['', Validators.required],
+        mobiMoseId: [''],
         mobiServId: [''],
         mobiFecha: [''],
         mobiObservaciones: [''],
@@ -71,6 +80,12 @@ export class MovilBitacoraComponent implements OnInit {
     this.movilBitacoraService.get(`mobiMoviId=${this.moviId}`).subscribe(
       (bitacora) => {
         this.movilbitacora = bitacora;
+        this.actualizarTabla();
+      }
+    );
+    this.movilService.get(`moviId=${this.moviId}`).subscribe(
+      (bitacora) => {
+        this.moviles = bitacora;
         this.actualizarTabla();
       }
     );
@@ -126,12 +141,26 @@ export class MovilBitacoraComponent implements OnInit {
   }
 
 
+
   guardar() {
     if (!this.form.valid) {
       return;
     }
 
     Object.assign(this.seleccionado, this.form.value);
+
+    let fechaaux : Date = new Date();
+
+    fechaaux.setDate(this.seleccionado.mobiFecha.getDate() + this.movilservicioService.moseSeleccionado.mosePeriodo)
+
+    this.seleccionado.mobiMoviId = this.moviId;
+    this.seleccionado.mobiMoseId = this.moseId;
+    this.seleccionado.mobiServId = this.servId;
+    this.seleccionado.mobiOdometro = this.movilService.odometro.moviModoOdometro;
+    this.seleccionado.mobiProximoOdometro = this.movilservicioService.moseSeleccionado.moseKM + this.seleccionado.mobiOdometro;
+    this.seleccionado.mobiProximaFecha = fechaaux;
+    this.seleccionado.mobiPendiente = true;
+
 
     if(this.seleccionado.mobiId){
       this.movilBitacoraService.put(this.seleccionado).subscribe((bitacora)=>{
@@ -142,11 +171,14 @@ export class MovilBitacoraComponent implements OnInit {
       this.movilBitacoraService.post(this.seleccionado)
         .subscribe((bitacora) => {
           this.movilbitacora.push(bitacora);
-          this.mostrarFormulario = false;
+          
           this.actualizarTabla();
+          alert("Bitacora insertada con exito!");
+          this.mostrarForm = false;
         });
-      
     }
+
+    
    
   }
   cancelar() {

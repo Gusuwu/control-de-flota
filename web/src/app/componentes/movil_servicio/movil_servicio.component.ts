@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MovilServicio } from 'src/app/modelo/movil_servicio';
 import { Servicio } from 'src/app/modelo/servicio';
-import { ServicioTarea } from 'src/app/modelo/servicio_tarea';
 import { MovilServicioService } from 'src/app/servicios/movil_servicio.service';
 import { ServicioService } from 'src/app/servicios/servicio.service';
 import { ConfirmarComponent } from 'src/app/shared/confirmar/confirmar.component';
@@ -109,6 +108,7 @@ export class MovilServicioComponent implements OnInit {
   }
 
   realizar(seleccionado: MovilServicio){
+    this.msService.moseSeleccionado = seleccionado;
     this.mostrarBitacora = true;
     this.mostrarGrilla = true;
     this.seleccionado = seleccionado;
@@ -121,6 +121,10 @@ export class MovilServicioComponent implements OnInit {
 
   }
 
+  volver(){
+    this.mostrarBitacora = false;
+    this.mostrarGrilla = false;
+  }
 
   guardar() {
     if (!this.form.valid) {

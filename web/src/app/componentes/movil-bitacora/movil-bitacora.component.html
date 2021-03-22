@@ -1,13 +1,12 @@
 <br>
         <div [hidden]="mostrarGrilla || mostrarTabla">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-                <mat-text-column name="mobiId" headerText="ID"></mat-text-column>
-                <mat-text-column name="mobiMoviId" headerText="ID Movil"></mat-text-column>
-                <mat-text-column name="mobiMoseId" headerText="ID MovilServicio"></mat-text-column>
                 <mat-text-column name="mobiFecha" headerText="Fecha"></mat-text-column>
-                <mat-text-column name="mobiObservaciones" headerText="Odometro"></mat-text-column>
+                <mat-text-column name="mobiObservaciones" headerText="observaciones"></mat-text-column>
                 <mat-text-column name="mobiOdometro" headerText="Odometro"></mat-text-column>
+                <mat-text-column name="mobiProximoOdometro" headerText="Proximo odometro"></mat-text-column>
+                <mat-text-column name="mobiProximaFecha" headerText="Proxima fecha"></mat-text-column>
+                <mat-text-column name="mobiPendiente" headerText="Pendiente"></mat-text-column>
 
                 <ng-container matColumnDef="acciones">
                     <th mat-header-cell *matHeaderCellDef> </th>
@@ -49,15 +48,14 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                       </mat-form-field>
-                      
+
                 </div>
 
                 <div style="text-align: center;">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Odometro</mat-label>
-                        <input matInput type="number" formControlName="modoOdometro" required>
-                        <mat-error>El campo no puede ser vacio</mat-error>
-                    </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Observaciones</mat-label>
+                    <textarea matInput formControlName="mobiObservaciones" placeholder="Redacte sus observaciones ..."></textarea>
+                  </mat-form-field>
                 </div>
 
                 <div style="text-align: center;">

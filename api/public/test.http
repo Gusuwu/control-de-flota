@@ -22,15 +22,23 @@ DELETE http://localhost:8888/index.php/servicio/1 HTTP/1.1
 
 ###
 
-POST http://localhost:8888/index.php/movil_odometro HTTP/1.1
+POST http://localhost:8888/index.php/movil_bitacora HTTP/1.1
 Content-Type: application/json
 
-{"modoBorrado": false
-,"modoFecha": "2021-03-09T03:00:00.000Z"
-,"modoFechaAlta": "2021-03-08T15:34:11.717Z"
-,"modoId": 0
-,"modoMoviId": 14
-,"modoOdometro": 500
+{"mobiBorrado": 0,
+"mobiFecha": "2021-03-22T03:00:00.000Z",
+"mobiFechaAlta": "2021-03-22T03:00:00.000Z",
+"mobiId": 13,
+"mobiIdAnterior": "",
+"mobiIdSiguiente": "",
+"mobiMoseId": 5,
+"mobiMoviId": 1,
+"mobiObservaciones": "prueba",
+"mobiOdometro": 60000,
+"mobiPendiente": true,
+"mobiProximaFecha": "2021-04-21T15:37:19.026Z",
+"mobiProximoOdometro": 72000,
+"mobiServId": 1
 }
 
 
