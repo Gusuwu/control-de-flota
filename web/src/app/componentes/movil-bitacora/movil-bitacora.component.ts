@@ -140,7 +140,11 @@ export class MovilBitacoraComponent implements OnInit {
 
   }
 
-
+  realizar(seleccionado: MovilBitacora){
+    this.mostrarGrilla = true;
+    this.mostrarFormulario = true;
+    this.seleccionado = seleccionado;
+  }
 
   guardar() {
     if (!this.form.valid) {

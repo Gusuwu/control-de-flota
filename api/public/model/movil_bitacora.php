@@ -96,10 +96,14 @@ class MovilBitacora
     public function put ($db) {
         $stmt = SQL::query($db,
         "UPDATE $this->table
-        SET mobiMoviId = ?
+        SET mobiPendiente = ?
+        ,mobiIdSiguiente = ?
+        ,mobiIdAnterior = ?
         WHERE mobiId = ?",
         [
-            DATA["mobiMoviId"],
+            DATA["mobiPendiente"],
+            DATA["mobiIdSiguiente"],
+            DATA["mobiIdAnterior"],
             DATA["mobiId"]
         ] );
 
