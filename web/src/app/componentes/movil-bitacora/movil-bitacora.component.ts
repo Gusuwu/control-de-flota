@@ -40,9 +40,11 @@ export class MovilBitacoraComponent implements OnInit {
   movilbitacora: MovilBitacora[] = [];
   moviles : MovilG[] = [];
   seleccionado = new MovilBitacora();
+
+  edit : number = 0;
   
 
-  columnas: string[] = ['mobiFecha', 'mobiObservaciones','mobiProximoOdometro','mobiProximaFecha','mobiOdometro','mobiPendiente', 'acciones'];
+  columnas: string[] = ['mobiId','mobiIdAnterior','mobiIdSiguiente','mobiFecha', 'mobiObservaciones','mobiProximoOdometro','mobiProximaFecha','mobiOdometro','mobiPendiente', 'acciones'];
   dataSource = new MatTableDataSource<MovilBitacora>();
 
 
@@ -135,15 +137,16 @@ export class MovilBitacoraComponent implements OnInit {
     this.mostrarFormulario = true;
     this.mostrarGrilla = true;
     this.seleccionado = seleccionado;
-    
     this.form.setValue(seleccionado);
-
+    this.edit = 1;
   }
 
   realizar(seleccionado: MovilBitacora){
     this.mostrarGrilla = true;
     this.mostrarFormulario = true;
     this.seleccionado = seleccionado;
+    this.form.setValue(seleccionado);
+    this.edit = 0;
   }
 
   guardar() {
@@ -167,6 +170,19 @@ export class MovilBitacoraComponent implements OnInit {
 
 
     if(this.seleccionado.mobiId){
+      if(this.edit == 0){
+        this.seleccionado.mobiPendiente = false; 
+        let idanterior = this.movilbitacora.find(bita => bita.mobiId < this.seleccionado.mobiId);
+        if(idanterior!.mobiId > 0 || idanterior!.mobiId != null){
+          this.seleccionado.mobiIdAnterior = idanterior!.mobiId;
+          idanterior!.mobiIdSiguiente = this.seleccionado.mobiId;
+          this.movilBitacoraService.put(idanterior!).subscribe((bitacora)=>{
+            this.mostrarFormulario = false;
+          });
+        }else{
+          this.seleccionado.mobiIdAnterior = 0;
+        }
+      }
       this.movilBitacoraService.put(this.seleccionado).subscribe((bitacora)=>{
         this.mostrarFormulario = false;
       });
@@ -188,7 +204,6 @@ export class MovilBitacoraComponent implements OnInit {
   cancelar() {
     this.mostrarFormulario = false;
     this.mostrarGrilla = false;
-
   }
 
 

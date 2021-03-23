@@ -97,11 +97,17 @@ class MovilBitacora
         $stmt = SQL::query($db,
         "UPDATE $this->table
         SET mobiPendiente = ?
+        ,mobiObservaciones= ?
+        ,mobiFecha= ?
+        ,mobiProximaFecha= ?
         ,mobiIdSiguiente = ?
         ,mobiIdAnterior = ?
         WHERE mobiId = ?",
         [
             DATA["mobiPendiente"],
+            DATA["mobiObservaciones"],
+            DATA["mobiFecha"],
+            DATA["mobiProximaFecha"],
             DATA["mobiIdSiguiente"],
             DATA["mobiIdAnterior"],
             DATA["mobiId"]

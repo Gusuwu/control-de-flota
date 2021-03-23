@@ -1,6 +1,9 @@
 <br>
         <div [hidden]="mostrarGrilla || mostrarTabla">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <mat-text-column name="mobiId" headerText="ID"></mat-text-column>
+                <mat-text-column name="mobiIdAnterior" headerText="Ant"></mat-text-column>
+                <mat-text-column name="mobiIdSiguiente" headerText="Sig"></mat-text-column>
                 <mat-text-column name="mobiFecha" headerText="Fecha"></mat-text-column>
                 <mat-text-column name="mobiObservaciones" headerText="observaciones"></mat-text-column>
                 <mat-text-column name="mobiOdometro" headerText="Odometro"></mat-text-column>

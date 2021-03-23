@@ -81,6 +81,7 @@ export class MovilServicioComponent implements OnInit {
     this.seleccionado = new MovilServicio();
     this.form.setValue(this.seleccionado)
     this.mostrarFormulario = true;
+    this.mostrarGrilla = true;
   }
 
   delete(fila: MovilServicio) {
@@ -154,6 +155,7 @@ export class MovilServicioComponent implements OnInit {
   }
   cancelar() {
     this.mostrarFormulario = false;
+    this.mostrarGrilla = false;
   }
 
 
