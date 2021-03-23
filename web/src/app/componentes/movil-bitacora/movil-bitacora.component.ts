@@ -171,11 +171,12 @@ export class MovilBitacoraComponent implements OnInit {
 
     if(this.seleccionado.mobiId){
       if(this.edit == 0){
-        this.seleccionado.mobiPendiente = false; 
+        //this.seleccionado.mobiPendiente = false; 
         let idanterior = this.movilbitacora.find(bita => bita.mobiId < this.seleccionado.mobiId);
         if(idanterior!.mobiId > 0 || idanterior!.mobiId != null){
           this.seleccionado.mobiIdAnterior = idanterior!.mobiId;
           idanterior!.mobiIdSiguiente = this.seleccionado.mobiId;
+          idanterior!.mobiPendiente = false;
           this.movilBitacoraService.put(idanterior!).subscribe((bitacora)=>{
             this.mostrarFormulario = false;
           });
