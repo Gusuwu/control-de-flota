@@ -52,6 +52,8 @@ include_once 'controllers/movil_grupo.php';
 include_once 'controllers/movil_servicio.php';
 include_once 'controllers/movil_odometro.php';
 include_once 'controllers/movil_bitacora.php';
+include_once 'controllers/bitacora-tarea.php';
+
 
 
 $app->get('/', function (Request $request, Response $response, $args) {
