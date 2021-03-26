@@ -190,10 +190,6 @@ export class MovilGrupoComponent implements OnInit {
       //recorro la logitud del arreglo e inserto movil servicio con la id del servicio del primer grupo y al final borro este servicio del arreglo
       //así guardo la id del siguiente servicio en el arreglo en la variable idgservicio
       for(let i = 0 ; i <= length; i++ ){
-
-        if(idservicio != (aux.find(grupo => grupo.grusServId == idservicio)!.grusServId)){
-          idservicio += 1;
-        }else{
         
           // seteo los valores para los campos
           this.movilservicio.moseServId = idservicio;
@@ -208,7 +204,7 @@ export class MovilGrupoComponent implements OnInit {
           
           //borro el actual servicio del arreglo
           aux.shift();
-        }
+       
 
         //guardo el siguiente id para la siguiente pasada
         idservicio = aux.find(grupo => grupo.grusGrupId == this.seleccionado.mogrGrupId)!.grusServId;

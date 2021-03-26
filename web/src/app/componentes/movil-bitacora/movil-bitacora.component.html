@@ -17,12 +17,13 @@
                         <button mat-raised-button color="accent" title="editar" (click)="editar(bitacora)">
                             Editar
                         </button>
+                        <button style="margin-left: 0.2cm;" mat-raised-button color="primary" title="realizar" (click)="realizar(bitacora)">
+                            Realizar
+                        </button>
                         <button style="margin-left: 0.2cm;" mat-raised-button color="warn" title="borrar" (click)="delete(bitacora)">
                             Borrar
                         </button>
-                        <button style="margin-left: 0.2cm;" mat-raised-button color="primary" title="bitacora" (click)="realizar(bitacora)">
-                            Realizar
-                        </button>
+                        
                     </td>
                 </ng-container>
 
@@ -37,6 +38,11 @@
             <div style="text-align: center;">
                 <button mat-raised-button color="primary" (click)="agregar()">Agregar</button>
             </div>
+        </div>
+
+        <div *ngIf="mostrarTarea">
+
+            <button mat-raised-button color="primary" (click)="volver()">Volver</button>
         </div>
 
         <div *ngIf="mostrarFormulario || mostrarForm">

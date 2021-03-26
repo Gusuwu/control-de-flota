@@ -14,9 +14,9 @@ import { ConfirmarComponent } from 'src/app/shared/confirmar/confirmar.component
 
 
 @Component({
-  selector: 'app-servicio-tarea',
-  templateUrl: './servicio_tarea.component.html',
-  styleUrls: ['./servicio_tarea.component.css']
+  selector: 'app-bitacora-tarea',
+  templateUrl: './bitacora-tarea.component.html',
+  styleUrls: ['./bitacora-tarea.component.css']
 })
 export class BitacoraTareaComponent implements OnInit {
 
@@ -25,11 +25,12 @@ export class BitacoraTareaComponent implements OnInit {
   bitacoratareas: BitacoraTarea[] = [];
   seleccionado = new BitacoraTarea();
 
-  columnas: string[] = ['tareNombre', 'tareDescripcion', 'tareUnidadMedida', 'tareCantidad', 'tareCosto', 'setaServId', 'setaTareId', 'acciones'];
+  columnas: string[] = ['bitaId', 'bitaMobiId', 'bitaTareId', 'bitaObservaciones', 'bitaCantidad', 'bitaCosto', 'acciones'];
   dataSource = new MatTableDataSource<BitacoraTarea>();
 
 
   form = new FormGroup({});
+  mostrarGrilla = false;
   mostrarFormulario = false;
 
   tareas: Tarea[] = [];
@@ -73,10 +74,11 @@ export class BitacoraTareaComponent implements OnInit {
   }
 
   agregar() {
-   
+   this.mostrarGrilla = true;
+   this.mostrarFormulario = true;
     this.seleccionado = new BitacoraTarea();
     this.form.setValue(this.seleccionado)
-    this.mostrarFormulario = true;
+    
   }
 
   delete(fila: BitacoraTarea) {
@@ -95,6 +97,7 @@ export class BitacoraTareaComponent implements OnInit {
   }
 
   editar(seleccionado: BitacoraTarea) {
+    this.mostrarGrilla = true;
     this.mostrarFormulario = true;
     this.seleccionado = seleccionado;
     
@@ -115,10 +118,11 @@ export class BitacoraTareaComponent implements OnInit {
       
     }
 
-    this.mostrarFormulario=false;
+    this.mostrarGrilla=false;
     this.actualizarTabla();
   }
   cancelar() {
+    this.mostrarGrilla = false;
     this.mostrarFormulario = false;
   }
 

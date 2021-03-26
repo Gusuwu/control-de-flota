@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { getMatFormFieldDuplicatedHintError } from '@angular/material/form-field';
 import { MatTableDataSource } from '@angular/material/table';
 import { audit } from 'rxjs/operators';
+import { BitacoraTarea } from 'src/app/modelo/bitacora-tarea';
 import { Grupo } from 'src/app/modelo/grupo';
 import { GrupoServicio } from 'src/app/modelo/grupo_servicio';
 import { MovilG } from 'src/app/modelo/movil-grilla';
@@ -12,6 +13,8 @@ import { MovilBitacora } from 'src/app/modelo/movil_bitacora';
 import { MovilGrupo } from 'src/app/modelo/movil_grupo';
 import { MovilServicio } from 'src/app/modelo/movil_servicio';
 import { Servicio } from 'src/app/modelo/servicio';
+import { ServicioTarea } from 'src/app/modelo/servicio_tarea';
+import { BitacoraTareaService } from 'src/app/servicios/bitacora-tarea.service';
 import { GrupoService } from 'src/app/servicios/grupo.service';
 import { GrupoServicioService } from 'src/app/servicios/grupo_servicio.service';
 import { MovilGService } from 'src/app/servicios/movil-grilla.service';
@@ -19,6 +22,7 @@ import { MovilBitacoraService } from 'src/app/servicios/movil_bitacora.service';
 import { MovilGrupoService } from 'src/app/servicios/movil_grupo.service';
 import { MovilServicioService } from 'src/app/servicios/movil_servicio.service';
 import { ServicioService } from 'src/app/servicios/servicio.service';
+import { ServicioTareaService } from 'src/app/servicios/servicio_tarea';
 import { ConfirmarComponent } from 'src/app/shared/confirmar/confirmar.component';
 import { DatosService } from 'src/app/shared/datos/datos.service';
 
@@ -39,8 +43,12 @@ export class MovilBitacoraComponent implements OnInit {
 
   movilbitacora: MovilBitacora[] = [];
   moviles : MovilG[] = [];
+  serviciostareas : ServicioTarea[] = [];
   seleccionado = new MovilBitacora();
+  bitacoratarea = new BitacoraTarea();
+  bitacorastareas : BitacoraTarea[] = [];
 
+  idAux: number = -1;
   edit : number = 0;
   
 
@@ -51,12 +59,15 @@ export class MovilBitacoraComponent implements OnInit {
   form = new FormGroup({});
   mostrarFormulario = false;
   mostrarGrilla = false;
+  mostrarTarea = false;
 
   constructor(private movilBitacoraService: MovilBitacoraService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     public movilService : MovilGService,
-    public movilservicioService : MovilServicioService
+    public movilservicioService : MovilServicioService,
+    public servicioTareasService : ServicioTareaService,
+    public bitacoraTareaService : BitacoraTareaService
    ) { }
 
 
@@ -85,12 +96,25 @@ export class MovilBitacoraComponent implements OnInit {
         this.actualizarTabla();
       }
     );
+
+    this.bitacoraTareaService.get().subscribe(
+      (bita) => {
+        this.bitacorastareas = bita;
+        this.actualizarTabla();
+      }
+    );
+   
     this.movilService.get(`moviId=${this.moviId}`).subscribe(
       (bitacora) => {
         this.moviles = bitacora;
         this.actualizarTabla();
       }
     );
+
+    this.servicioTareasService.get().subscribe((tareas)=> {
+      this.serviciostareas=tareas;
+    })
+
   }
 
   actualizarTabla() {
@@ -149,13 +173,26 @@ export class MovilBitacoraComponent implements OnInit {
     this.edit = 0;
   }
 
+  tareas(seleccionado: MovilBitacora){
+    this.mostrarTarea = true;
+    this.mostrarGrilla = true;
+    this.seleccionado = seleccionado;
+  }
+
+  volver(){
+    this.mostrarTarea = true;
+    this.mostrarGrilla = true;
+  }
+
   guardar() {
     if (!this.form.valid) {
       return;
     }
 
-    Object.assign(this.seleccionado, this.form.value);
+    this.idAux--;
 
+    Object.assign(this.seleccionado, this.form.value);
+    let id: number;
     let fechaaux : Date = new Date();
 
     fechaaux.setDate(this.seleccionado.mobiFecha.getDate() + this.movilservicioService.moseSeleccionado.mosePeriodo)
@@ -186,22 +223,59 @@ export class MovilBitacoraComponent implements OnInit {
       }
       this.movilBitacoraService.put(this.seleccionado).subscribe((bitacora)=>{
         this.mostrarFormulario = false;
+          this.mostrarGrilla = false;
       });
 
     }else{
+      
       this.movilBitacoraService.post(this.seleccionado)
         .subscribe((bitacora) => {
           this.movilbitacora.push(bitacora);
+          let aux = this.serviciostareas.filter(tarea => tarea.setaServId == this.seleccionado.mobiServId);
+
+          let length = aux.length;
+
+          for(let i = 0; i <= length; i++ ){
+
+              this.bitacoratarea.bitaId = this.idAux;
+              this.bitacoratarea.bitaMobiId = bitacora.mobiId.valueOf();
+              this.bitacoratarea.bitaTareId = aux[i].setaTareId;
+              this.bitacoratarea.bitaCantidad = aux[i].tareCantidad;
+              this.bitacoratarea.bitaCosto = aux[i].tareCosto;
+
+              this.bitacoraTareaService.tareas.push(this.bitacoratarea);
+          }
+
+
           
+
           this.actualizarTabla();
           alert("Bitacora insertada con exito!");
-          this.mostrarForm = false;
+          this.mostrarFormulario = false;
+          this.mostrarGrilla = false;
+         
         });
     }
-
-    
-   
+     this.actualizarTareas();   
   }
+
+  //`bitaMobiId=${seleccionado.mobiId}`
+
+  actualizarTareas(){
+    this.bitacoraTareaService.tareas.forEach( (dato) => { 
+
+      dato.bitaMobiId = this.bitacoratarea.bitaMobiId;
+
+      if(dato.bitaBorrado){
+        this.bitacoraTareaService.delete(dato.bitaId).subscribe();
+      }else if(dato.bitaId < 0){
+        this.bitacoraTareaService.post(dato).subscribe();
+      }else (dato.bitaId > 0 )
+        this.bitacoraTareaService.put(dato).subscribe();
+    }
+   );
+  }
+
   cancelar() {
     this.mostrarFormulario = false;
     this.mostrarGrilla = false;

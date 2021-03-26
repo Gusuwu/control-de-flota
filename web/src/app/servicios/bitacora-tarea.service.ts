@@ -15,4 +15,7 @@ export class BitacoraTareaService  extends ApiService<BitacoraTarea>{
   ) {
     super("bitacora-tarea", http, app);
   }
+
+  tareas : BitacoraTarea[] = [];
+
 }

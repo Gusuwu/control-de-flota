@@ -39,6 +39,7 @@ import { AlertaComponent } from './shared/alerta/alerta.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MovilBitacora } from './modelo/movil_bitacora';
 import { MovilBitacoraComponent } from './componentes/movil-bitacora/movil-bitacora.component';
+import { BitacoraTareaComponent } from './componentes/bitacora-tarea/bitacora-tarea.component';
 
   
 
@@ -59,6 +60,7 @@ import { MovilBitacoraComponent } from './componentes/movil-bitacora/movil-bitac
     MovilGComponent,
     MovilOdometroComponent,
     MovilBitacoraComponent,
+    BitacoraTareaComponent
   ],
   imports: [
     BrowserModule,

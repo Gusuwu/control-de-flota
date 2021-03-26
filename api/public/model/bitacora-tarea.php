@@ -54,7 +54,7 @@ class BitacoraTarea
             ,bitaCosto
             ,bitaFechaAlta
             ,bitaBorrado)
-        VALUES (?,?,GETDATE(),0);
+        VALUES (?,?,?,?,?,GETDATE(),0);
 
         SELECT @@IDENTITY bitaId, CONVERT(VARCHAR, GETDATE(), 126) bitaFechaAlta;",
         [ DATA["bitaMobiId"]
