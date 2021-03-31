@@ -31,6 +31,7 @@ export class MovilGComponent implements OnInit, AfterViewInit {
   mostrarManten = false;
   mostrarGrilla = false;
   mostrarAgregar = false;
+  mostrarMovil = false;
 
   @ViewChild(MatSort) sort! : MatSort;
 
@@ -57,6 +58,13 @@ export class MovilGComponent implements OnInit, AfterViewInit {
       moviModoOdometro: ['', Validators.required],
       moviBorrado: [''],
       moviFechaAlta: [''],
+      descripcion: [''],
+      marca : [''],
+      modelo : [''],
+      anio : [''],
+      chasis : [''],
+      numeroMovil : [''],
+      color : [''],
     });
 
     this.actualizarServicios();
@@ -145,9 +153,16 @@ export class MovilGComponent implements OnInit, AfterViewInit {
   editar(seleccionado: MovilG) {
     this.mostrarEditar = true;
     this.mostrarGrilla = true;
+    this.mostrarMovil = false;
     this.movilSelected = seleccionado;
     this.mS.odometro = seleccionado;
     this.formulario.setValue(seleccionado);
+  }
+
+  editarMovil(){
+    this.mostrarMovil = true;
+    this.mostrarEditar = false;
+    this.formulario.setValue(this.movilSelected);
   }
 
   modificar(seleccionado: MovilG) {
@@ -177,6 +192,12 @@ export class MovilGComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    Object.assign(this.movilSelected, this.formulario.value);
+
+    this.mS.put(this.movilSelected).subscribe((movil) => {
+      this.mostrarMovil = false;
+    });
+
     this.mostrarGrilla = false;
   }
 
@@ -185,19 +206,22 @@ export class MovilGComponent implements OnInit, AfterViewInit {
    
     }
 
-  cancelar() {
-
-    if(this.movilSelected.moviId == this.mS.odometro.moviId){
-      this.movilSelected.moviModoFecha = this.mS.odometro.moviModoFecha;
-      this.movilSelected.moviModoOdometro = this.mS.odometro.moviModoOdometro;
+  volver(){
+      this.mostrarMovil = false;
+      this.mostrarEditar = true;
+  }
   
-      this.mS.put(this.movilSelected)
-          .subscribe((movil) => {
-            //const pos = this.moviles.findIndex(movil => movil.moviId == this.movil.moviId);
-            //this.moviles.splice(pos, 1, this.movilSelected);            
-          });
+  volverGrilla(){
+    this.mostrarEditar = false;
+    this.mostrarManten = false;
+    this.mostrarAgregar = false;
+    this.mostrarGrilla = false;
+    this.actualizar();
+  }
+
+  cancelar() {
     
-    }
+  
 
     this.actualizarServicios(); 
     
@@ -206,8 +230,8 @@ export class MovilGComponent implements OnInit, AfterViewInit {
     this.mostrarAgregar = false;
     this.mostrarGrilla = false;
     this.actualizar();
-
   }
+ 
 
 
 }

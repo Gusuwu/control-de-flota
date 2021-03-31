@@ -40,7 +40,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MovilBitacora } from './modelo/movil_bitacora';
 import { MovilBitacoraComponent } from './componentes/movil-bitacora/movil-bitacora.component';
 import { BitacoraTareaComponent } from './componentes/bitacora-tarea/bitacora-tarea.component';
-
+import {MatListModule} from '@angular/material/list';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatGridListModule} from '@angular/material/grid-list';
   
 
 @NgModule({
@@ -86,6 +88,10 @@ import { BitacoraTareaComponent } from './componentes/bitacora-tarea/bitacora-ta
     MatToolbarModule,
     MatTabsModule,
     MatSlideToggleModule,
+    MatListModule,
+    MatDividerModule,
+    MatGridListModule,
+
   ],
   providers: [
     AppConfigService,

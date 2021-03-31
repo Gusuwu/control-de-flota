@@ -41,6 +41,10 @@ export class MovilComponent implements OnInit, AfterViewInit {
 
   movilSelected = new Movil();
 
+
+  patente : string = "";
+  descripcion : string = "";
+  dependencia : string = "";
   movil = new MovilG();
 
   ngAfterViewInit(): void {
@@ -83,7 +87,63 @@ export class MovilComponent implements OnInit, AfterViewInit {
   }
 
 
-  
+  busqueda(){
+    if(this.patente && !this.dependencia && !this.descripcion){
+      this.mS.get(`patente=${this.patente}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else if(!this.patente && !this.dependencia && this.descripcion){
+      this.mS.get(`descripcion=${this.descripcion}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else{
+      this.mS.get(`dependencia=${this.dependencia}`).subscribe(
+      (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }
+
+    if(this.patente && this.descripcion){
+      this.mS.get(`patente=${this.patente}&descripcion=${this.descripcion}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else if(this.patente && this.dependencia){
+      this.mS.get(`patente=${this.patente}&dependencia=${this.dependencia}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else if(this.dependencia && this.descripcion){
+      this.mS.get(`descripcion=${this.descripcion}&dependencia=${this.dependencia}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else if(this.patente && this.descripcion && this.dependencia){
+      this.mS.get(`patente=${this.patente}&descripcion=${this.descripcion}&dependencia=${this.dependencia}`).subscribe(
+        (movil) => {
+        this.moviles = movil;
+        this.actualizar();
+      }
+      )
+    }else{
+
+    }
+    
+  }
 
   agregar(seleccionado : Movil) {
     this.formulario.reset();
@@ -100,6 +160,16 @@ export class MovilComponent implements OnInit, AfterViewInit {
 
       if(seleccionado.moviBorrado){
         this.movil.moviBorrado = !seleccionado.moviBorrado;
+        this.movil.patente = seleccionado.patente;
+        this.movil.dependencia = seleccionado.dependencia;
+        this.movil.descripcion = seleccionado.descripcion;
+        this.movil.marca =  seleccionado.marca;
+        this.movil.modelo =  seleccionado.modelo;
+        this.movil.anio =  seleccionado.anio;
+        this.movil.tipoMovil =  seleccionado.tipoMovil;
+        this.movil.numeroMovil =  seleccionado.numeroMovil;
+        this.movil.color =  seleccionado.color;
+
         this.msG.put(this.movil)
         .subscribe((movil) => {             
         });

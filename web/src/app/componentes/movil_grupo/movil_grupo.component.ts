@@ -31,7 +31,7 @@ export class MovilGrupoComponent implements OnInit {
   movilgrupos: MovilGrupo[] = [];
   seleccionado = new MovilGrupo();
 
-  columnas: string[] = ['mogrId', 'grupNombre', 'mogrMoviId', 'mogrGrupId', 'acciones'];
+  columnas: string[] = ['grupNombre',  'acciones'];
   dataSource = new MatTableDataSource<MovilGrupo>();
 
 

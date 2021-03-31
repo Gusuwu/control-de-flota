@@ -11,4 +11,8 @@ export class Movil {
     dependencia: string = "";
     marca: string = "";
     modelo: string = "";
+    anio: string = "";
+    tipoMovil: string = "";
+    numeroMovil : number = 0; 
+    color : string = "";
 }

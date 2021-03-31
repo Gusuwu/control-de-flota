@@ -95,15 +95,33 @@ class MovilGrilla
         SET moviModoOdometro = ?
             ,moviModoFecha = ?
             ,moviBorrado = ?
-        WHERE moviId = ?",
+        WHERE moviId = ?;
+        
+        UPDATE AVL_Estructura.dbo.Movil
+        SET descripcion = ?
+            ,marca = ?
+            ,modelo = ?
+            ,anio = ?
+            ,color = ?
+            ,numeroMovil = ?
+        WHERE MovilID = ?",
         [
             DATA["moviModoOdometro"],
             DATA["moviModoFecha"],
             DATA["moviBorrado"],
+            DATA["moviId"],
+
+            DATA["descripcion"],
+            DATA["marca"],
+            DATA["modelo"],
+            DATA["anio"],
+            DATA["color"],
+            DATA["numeroMovil"],
             DATA["moviId"]
         ] );
 
         sqlsrv_fetch($stmt);
+        sqlsrv_next_result($stmt);
         return DATA;
     }
 

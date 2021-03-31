@@ -2,16 +2,13 @@
         <div [hidden]="mostrarGrilla || mostrarTabla">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-                <mat-text-column name="mogrId" headerText="ID"></mat-text-column>
-                <mat-text-column name="mogrMoviId" headerText="ID Movil"></mat-text-column>
-                <mat-text-column name="mogrGrupId" headerText="ID Grupo"></mat-text-column>
                 <mat-text-column name="grupNombre" headerText="Nombre"></mat-text-column>
                 
 
                 <ng-container matColumnDef="acciones">
-                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
                     <td mat-cell *matCellDef="let movgru">
-                        <button mat-raised-button color="accent" title="editar" (click)="editar(movgru)">
+                        <button style="margin-left: 0.2cm;" mat-raised-button color="accent" title="editar" (click)="editar(movgru)">
                             Editar
                         </button>
                         <button style="margin-left: 0.2cm;" mat-raised-button color="warn" title="borrar" (click)="delete(movgru)">

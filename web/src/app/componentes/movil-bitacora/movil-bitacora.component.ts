@@ -238,42 +238,42 @@ export class MovilBitacoraComponent implements OnInit {
           for(let i = 0; i <= length; i++ ){
 
               this.bitacoratarea.bitaId = this.idAux;
-              this.bitacoratarea.bitaMobiId = bitacora.mobiId.valueOf();
+              this.bitacoratarea.bitaMobiId = +bitacora.mobiId;
               this.bitacoratarea.bitaTareId = aux[i].setaTareId;
               this.bitacoratarea.bitaCantidad = aux[i].tareCantidad;
               this.bitacoratarea.bitaCosto = aux[i].tareCosto;
 
               this.bitacoraTareaService.tareas.push(this.bitacoratarea);
           }
-
-
           
-
           this.actualizarTabla();
+          this.insertarTareas(this.bitacoratarea.bitaMobiId);
+          
           alert("Bitacora insertada con exito!");
           this.mostrarFormulario = false;
           this.mostrarGrilla = false;
          
         });
+        
     }
-     this.actualizarTareas();   
+     
   }
 
   //`bitaMobiId=${seleccionado.mobiId}`
 
-  actualizarTareas(){
+  insertarTareas(id : number){
     this.bitacoraTareaService.tareas.forEach( (dato) => { 
 
-      dato.bitaMobiId = this.bitacoratarea.bitaMobiId;
+      dato.bitaMobiId = id;
 
-      if(dato.bitaBorrado){
-        this.bitacoraTareaService.delete(dato.bitaId).subscribe();
-      }else if(dato.bitaId < 0){
-        this.bitacoraTareaService.post(dato).subscribe();
-      }else (dato.bitaId > 0 )
-        this.bitacoraTareaService.put(dato).subscribe();
-    }
-   );
+     if(dato.bitaBorrado){
+           this.bitacoraTareaService.delete(dato.bitaId).subscribe();
+         }else if(dato.bitaId < 0){
+           this.bitacoraTareaService.post(dato).subscribe();
+         }else (dato.bitaId > 0 )
+           this.bitacoraTareaService.put(dato).subscribe();
+       }
+     );
   }
 
   cancelar() {

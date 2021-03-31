@@ -6,6 +6,24 @@
         <mat-label >Busqueda</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: Teclado" #input>
         </mat-form-field>
+        <div  style="text-align: center;">
+            <div style="text-align: center; display:inline-flex;">
+            
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Patente" [(ngModel)]="patente">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Descripcion" [(ngModel)]="descripcion">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Dependencia" [(ngModel)]="dependencia">
+                </mat-form-field>    
+            </div>
+            <button mat-raised-button (click)="busqueda()"> Buscar </button>
+        </div>
+
     </div>
         <div [hidden]="mostrarFormulario">
             <div style="text-align: center;">
@@ -36,9 +54,12 @@
                 <ng-container matColumnDef="acciones">
                     <th mat-header-cell *matHeaderCellDef> Acciones </th>
                     <td mat-cell *matCellDef="let movil">
-                            <button mat-raised-button style="background-color: green;" title="añadir" (click)="agregar(movil)">
-                                <mat-icon style="color: white;">add</mat-icon>
+                            <button mat-raised-button [disabled]="movil.moviBorrado == 0 || movil.moviBorrado == 1 " title="añadir" (click)="agregar(movil)">
+                                <mat-icon>add</mat-icon>
                             </button>
+                            <button style="margin-left: 0.2cm;" type="button" [disabled]="movil.moviBorrado == 0 || movil.moviBorrado == null" title="reactivar" mat-raised-button color="primary" (click)="agregar(movil)">
+                                <mat-icon>autorenew</mat-icon>
+                            </button>  
                     </td>
                 </ng-container>
 

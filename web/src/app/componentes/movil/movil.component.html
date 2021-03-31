@@ -88,7 +88,7 @@
 
 
     <div *ngIf="mostrarGrilla">
-        <div *ngIf="mostrarAgregar">
+            <div *ngIf="mostrarAgregar">
 
             <form [formGroup]="formulario">
                 <div>
@@ -101,45 +101,107 @@
                 </div> 
             </form>
 
-        </div>
+            </div>
 
             <div *ngIf="mostrarEditar">
              <br>
+                            <div style="text-align: center;">
+                            <h2>Edición del móvil</h2>
+                            <button mat-raised-button (click)="volverGrilla()">Volver</button>&nbsp;
+                            <button mat-raised-button mat-raised-button (click)="editarMovil()" color="primary">Editar</button>
+                            </div>
+                            <br>
+             <mat-card>
+                <mat-grid-list cols="2" rowHeight="4:3">
+                    <mat-grid-tile style="width: 50%;">
+                    
+                        <div>
+                            <mat-list> 
+                                <mat-list-item><h2>Información del movil</h2></mat-list-item>
+                                <mat-divider></mat-divider>
+                                <mat-list-item>Patente: {{this.movilSelected.patente}}</mat-list-item>
+                                <mat-divider></mat-divider>
+                                <mat-list-item>Odometro: {{this.movilSelected.moviModoOdometro}}</mat-list-item>
+                                <mat-divider></mat-divider>
+                                <mat-list-item>Descripcion: {{this.movilSelected.descripcion}}</mat-list-item>
+                                <mat-divider></mat-divider>
+                                <mat-list-item>Marca: {{this.movilSelected.marca}}</mat-list-item>
+                                <mat-divider></mat-divider>
+                                <mat-list-item>Modelo: {{this.movilSelected.modelo}}</mat-list-item>
+                                <mat-divider></mat-divider>
+                                <mat-list-item>Año: {{this.movilSelected.anio}}</mat-list-item>
+                                <mat-divider></mat-divider>         
+                                <mat-list-item>Dependencia: {{this.movilSelected.dependencia}}</mat-list-item>
+                                <mat-divider></mat-divider>
+                                <mat-list-item>Tipo: {{this.movilSelected.tipoMovil}}</mat-list-item>
+                                <mat-divider></mat-divider>
+                                <mat-list-item>Color: {{this.movilSelected.color}}</mat-list-item>
+                                <mat-divider></mat-divider>
+                            </mat-list>    
+                        </div>        
+                        <br>
+    
+                        
+                     <br>
+                    </mat-grid-tile>
+                        <mat-grid-tile>
+                            
+                        <div>
+                            <div style="text-align: center;"><h2>Grupos del Móvil</h2></div>
+                            <div *ngIf="movilSelected && movilSelected.moviId && mostrarEditar">
+                                <app-movil-grupo [moviId]="movilSelected.moviId"></app-movil-grupo>
+                            </div>
+
+                        </div>
+                        
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </mat-card>
+            </div>
+
+            <div *ngIf="mostrarMovil">
                 <form [formGroup]="formulario">
-                    <div>
-    
-                        <div style="text-align: center;">
-                            <h2>Informacion del movil:</h2>
-                        </div>
-    
-                        <div style="text-align: center;">
-                            <label>Id: </label>
-                            
-                                <label *ngIf="this.formulario.value.moviId">{{this.formulario.value.moviId}}</label>
-                                <label *ngIf="!this.formulario.value.moviId">Id aun no cargado</label>
-                            
-                        </div>
-    
-                        <div style="text-align: center;">
-                            <label>Fecha de Alta: </label>
-                            
-                                <label *ngIf="this.formulario.value.moviFechaAlta">{{this.formulario.value.moviFechaAlta | date:
-                                    'dd-LL-yyyy'}}
-                                </label>
-                                <label *ngIf="!this.formulario.value.moviFechaAlta">Fecha aun no cargada</label>
-                            
-                        </div>
-                    </div>
-    
-                    <br>
-    
-                    <div style="text-align: center;">
-                        <button mat-raised-button (click)="cancelar()">Volver</button>
-                    </div>
-                </form> <br>
-                
-                <div *ngIf="movilSelected && movilSelected.moviId && mostrarEditar">
-                    <app-movil-grupo [moviId]="movilSelected.moviId"></app-movil-grupo>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Descripcion</mat-label>
+                        <input matInput formControlName="descripcion" [(ngModel)]="this.movilSelected.descripcion">  
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Marca</mat-label>
+                        <input matInput formControlName="marca" [(ngModel)]="this.movilSelected.marca">  
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Modelo</mat-label>
+                        <input matInput formControlName="modelo" [(ngModel)]="this.movilSelected.modelo">  
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Año</mat-label>
+                        <input matInput formControlName="anio" [(ngModel)]="this.movilSelected.anio">  
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Color</mat-label>
+                        <input matInput formControlName="color" [(ngModel)]="this.movilSelected.color">  
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Número</mat-label>
+                        <input matInput formControlName="numeroMovil" [(ngModel)]="this.movilSelected.numeroMovil">  
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+
+                </form>
+
+                <div style="text-align: center;">
+                    <button mat-raised-button mat-raised-button (click)="guardar()" color="primary">Guardar</button>&nbsp;
+                    <button mat-raised-button (click)="volver()">Cancelar</button>
                 </div>
 
             </div>
@@ -153,20 +215,10 @@
                         </div>
     
                         <div style="text-align: center;">
-                            <label>Id: </label>
+                            <label>Odometro del movil: </label>
                             
-                                <label *ngIf="this.formulario.value.moviId">{{this.formulario.value.moviId}}</label>
+                                <label *ngIf="this.formulario.value.moviId">{{this.movilSelected.moviModoOdometro}}</label>
                                 <label *ngIf="!this.formulario.value.moviId">Id aun no cargado</label>
-                            
-                        </div>
-    
-                        <div style="text-align: center;">
-                            <label>Fecha de Alta: </label>
-                            
-                                <label *ngIf="this.formulario.value.moviFechaAlta">{{this.formulario.value.moviFechaAlta | date:
-                                    'dd-LL-yyyy'}}
-                                </label>
-                                <label *ngIf="!this.formulario.value.moviFechaAlta">Fecha aun no cargada</label>
                             
                         </div>
                     </div>
@@ -179,6 +231,36 @@
                     <br>
 
                     <mat-tab-group mat-align-tabs="center">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon">drive_eta</mat-icon>
+                                Detalles
+                            </ng-template>
+                            <div>
+                                <mat-list > 
+                                    <mat-list-item><h2>Información del movil</h2></mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item >Patente: {{this.movilSelected.patente}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>Odometro: {{this.movilSelected.moviModoOdometro}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>Descripcion: {{this.movilSelected.descripcion}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>Marca: {{this.movilSelected.marca}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>Modelo: {{this.movilSelected.modelo}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>Año: {{this.movilSelected.anio}}</mat-list-item>
+                                    <mat-divider></mat-divider>         
+                                    <mat-list-item>Dependencia: {{this.movilSelected.dependencia}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>Tipo: {{this.movilSelected.tipoMovil}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>Color: {{this.movilSelected.color}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                </mat-list>    
+                            </div> 
+                        </mat-tab>
                         <mat-tab>
                             <ng-template mat-tab-label>
                             <mat-icon class="example-tab-icon">miscellaneous_services</mat-icon>
