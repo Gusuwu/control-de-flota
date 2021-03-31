@@ -52,7 +52,7 @@ export class MovilBitacoraComponent implements OnInit {
   edit : number = 0;
   
 
-  columnas: string[] = ['mobiId','mobiIdAnterior','mobiIdSiguiente','mobiFecha', 'mobiObservaciones','mobiProximoOdometro','mobiProximaFecha','mobiOdometro','mobiPendiente', 'acciones'];
+  columnas: string[] = ['servNombre','mobiIdAnterior','mobiIdSiguiente','mobiFecha', 'mobiObservaciones','mobiProximoOdometro','mobiProximaFecha','mobiOdometro','mobiPendiente', 'acciones'];
   dataSource = new MatTableDataSource<MovilBitacora>();
 
 
@@ -88,6 +88,7 @@ export class MovilBitacoraComponent implements OnInit {
         mobiPendiente: [''],
         mobiFechaAlta: [''],
         mobiBorrado: [''],
+        servNombre: [''],
     });
 
     this.movilBitacoraService.get(`mobiMoviId=${this.moviId}`).subscribe(

@@ -288,27 +288,21 @@
                             <mat-icon class="example-tab-icon">library_books</mat-icon>
                                 Bitacora
                             </ng-template>
-                            <mat-tab-group mat-align-tabs="center">
-                                <mat-tab>
-                                    <ng-template mat-tab-label>
-                                        <mat-icon class="example-tab-icon">library_books</mat-icon>
-                                            Bitacora
-                                        </ng-template>
-                                            <div *ngIf="movilSelected && movilSelected.moviId">
-                                                <app-movil-bitacora [moviId]="movilSelected.moviId"></app-movil-bitacora>
-                                            </div>
-                                </mat-tab>
-
-                                <mat-tab>
-                                    <ng-template mat-tab-label>
+                            <div *ngIf="movilSelected && movilSelected.moviId">
+                                <app-movil-bitacora [moviId]="movilSelected.moviId"></app-movil-bitacora>
+                            </div>
+                           
+                                
+                            
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
                                         <mat-icon class="example-tab-icon">library_books</mat-icon>
                                             Tareas
-                                        </ng-template>
+                            </ng-template>
                                     <div *ngIf="movilSelected && movilSelected.moviId">
                                         <app-bitacora-tarea [mobiId]="movilSelected.moviId"></app-bitacora-tarea>
                                     </div>
-                                </mat-tab>
-                            </mat-tab-group>
                         </mat-tab>
                       </mat-tab-group>
 

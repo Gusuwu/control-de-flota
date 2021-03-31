@@ -13,4 +13,6 @@ export class MovilBitacora {
     mobiPendiente : boolean = false;
     mobiFechaAlta: Date = new Date();
     mobiBorrado: boolean = false;
+    
+    servNombre : string = "";
 }

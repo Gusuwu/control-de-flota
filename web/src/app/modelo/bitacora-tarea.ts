@@ -7,4 +7,6 @@ export class BitacoraTarea {
     bitaCosto : number = 0;
     bitaFechaAlta: Date = new Date();
     bitaBorrado: boolean = false;
+
+    servNombre : string = "";
 }

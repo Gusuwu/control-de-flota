@@ -25,7 +25,7 @@ export class BitacoraTareaComponent implements OnInit {
   bitacoratareas: BitacoraTarea[] = [];
   seleccionado = new BitacoraTarea();
 
-  columnas: string[] = ['bitaId', 'bitaMobiId', 'bitaTareId', 'bitaObservaciones', 'bitaCantidad', 'bitaCosto', 'acciones'];
+  columnas: string[] = ['servNombre', 'bitaMobiId', 'bitaTareId', 'bitaObservaciones', 'bitaCantidad', 'bitaCosto', 'acciones'];
   dataSource = new MatTableDataSource<BitacoraTarea>();
 
 

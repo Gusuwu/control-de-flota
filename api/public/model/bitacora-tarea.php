@@ -12,11 +12,12 @@ class BitacoraTarea
             ,bitaCantidad
             ,bitaCosto'; 
 
-    public $join = " LEFT OUTER JOIN Tarea ON bitaTareId = tareId";
+    public $join = "";
     
     public function get ($db) {
         $sql = "SELECT TOP (1000) $this->fields FROM $this->table
-                $this->join
+                LEFT OUTER JOIN Tarea ON bitaTareId = tareId
+                LEFT OUTER JOIN MovilBitacora ON bitaMobiId = mobiId
                 WHERE bitaBorrado = 0";
 
         $params = null;

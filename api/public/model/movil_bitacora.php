@@ -15,9 +15,11 @@ class MovilBitacora
             ,mobiIdSiguiente
             ,mobiPendiente
             ,CONVERT(VARCHAR, mobiFechaAlta, 126) mobiFechaAlta
-            ,mobiBorrado'; 
+            ,mobiBorrado
+            ,servNombre'; 
 
-    public $join = "LEFT OUTER JOIN MovilServicio ON mobiMoseId = moseId";
+    public $join = "LEFT OUTER JOIN MovilServicio ON mobiMoseId = moseId
+                    LEFT OUTER JOIN Servicio on mobiServId = servId";
 
     public function get ($db) {
         $sql = "SELECT $this->fields FROM $this->table
