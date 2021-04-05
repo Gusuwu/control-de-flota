@@ -52,7 +52,7 @@ export class MovilBitacoraComponent implements OnInit {
   edit : number = 0;
   
 
-  columnas: string[] = ['servNombre','mobiIdAnterior','mobiIdSiguiente','mobiFecha', 'mobiObservaciones','mobiProximoOdometro','mobiProximaFecha','mobiOdometro','mobiPendiente', 'acciones'];
+  columnas: string[] = ['servNombre','servDescripcion','mobiFecha', 'mobiObservaciones','mobiProximoOdometro','mobiProximaFecha','mobiOdometro','mobiPendiente', 'acciones'];
   dataSource = new MatTableDataSource<MovilBitacora>();
 
 
@@ -89,6 +89,7 @@ export class MovilBitacoraComponent implements OnInit {
         mobiFechaAlta: [''],
         mobiBorrado: [''],
         servNombre: [''],
+        servDescripcion : [''],
     });
 
     this.movilBitacoraService.get(`mobiMoviId=${this.moviId}`).subscribe(
@@ -124,6 +125,33 @@ export class MovilBitacoraComponent implements OnInit {
 
   actualizar(){
     this.dataSource.data = this.movilBitacoraService.moviBita.filter(borrado => borrado.mobiBorrado==false);
+  }
+
+  filtrarPendientes(){
+    this.movilBitacoraService.get(`mobiMoviId=${this.moviId}&mobiPendiente=${true}`).subscribe(
+      (bitacora) => {
+        this.movilbitacora = bitacora;
+        this.actualizarTabla();
+      }
+    );
+  }
+  
+  filtrarRealizados(){
+    this.movilBitacoraService.get(`mobiMoviId=${this.moviId}&mobiPendiente=${false}`).subscribe(
+      (bitacora) => {
+        this.movilbitacora = bitacora;
+        this.actualizarTabla();
+      }
+    );
+  }
+
+  filtrarTodos(){
+    this.movilBitacoraService.get(`mobiMoviId=${this.moviId}`).subscribe(
+      (bitacora) => {
+        this.movilbitacora = bitacora;
+        this.actualizarTabla();
+      }
+    );
   }
 
   agregar() {
@@ -172,6 +200,10 @@ export class MovilBitacoraComponent implements OnInit {
     this.seleccionado = seleccionado;
     this.form.setValue(seleccionado);
     this.edit = 0;
+  }
+
+  repetir(seleccionado: MovilBitacora){
+    
   }
 
   tareas(seleccionado: MovilBitacora){

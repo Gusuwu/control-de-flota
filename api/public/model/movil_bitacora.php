@@ -16,7 +16,8 @@ class MovilBitacora
             ,mobiPendiente
             ,CONVERT(VARCHAR, mobiFechaAlta, 126) mobiFechaAlta
             ,mobiBorrado
-            ,servNombre'; 
+            ,servNombre
+            ,servDescripcion'; 
 
     public $join = "LEFT OUTER JOIN MovilServicio ON mobiMoseId = moseId
                     LEFT OUTER JOIN Servicio on mobiServId = servId";
@@ -28,8 +29,13 @@ class MovilBitacora
 
         $params = null;
         if (isset( $_GET["mobiMoviId"])){
-            $params = [$_GET["mobiMoviId"]];
+            $params[] = [$_GET["mobiMoviId"]];
             $sql = $sql . " AND mobiMoviId = ? ";
+        };
+
+        if (isset( $_GET["mobiPendiente"])){
+            $params[] = [$_GET["mobiPendiente"]];
+            $sql = $sql . " AND mobiPendiente = ? ";
         };
 
         $sql = $sql . " ORDER BY mobiId desc";

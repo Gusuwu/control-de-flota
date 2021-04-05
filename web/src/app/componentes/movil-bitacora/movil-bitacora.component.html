@@ -1,9 +1,19 @@
 <br>
         <div [hidden]="mostrarGrilla || mostrarTabla">
+            <div style="text-align: center;"><button style="margin-left: 0.2cm;" mat-raised-button color="primary" title="borrar" (click)="filtrarTodos()">
+                Ver todos
+            </button>
+            <button style="margin-left: 0.2cm;" mat-raised-button color="primary" title="borrar" (click)="filtrarPendientes()">
+                Ver pendientes
+            </button>
+            <button style="margin-left: 0.2cm;" mat-raised-button color="primary" title="borrar" (click)="filtrarRealizados()">
+                Ver realizados
+            </button></div>
+            <br>
+            
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                <mat-text-column name="servNombre" headerText="ID"></mat-text-column>
-                <mat-text-column name="mobiIdAnterior" headerText="Ant"></mat-text-column>
-                <mat-text-column name="mobiIdSiguiente" headerText="Sig"></mat-text-column>
+                <mat-text-column name="servNombre" headerText="Nombre"></mat-text-column>
+                <mat-text-column name="servDescripcion" headerText="Descripcion"></mat-text-column>
                 <mat-text-column name="mobiFecha" headerText="Fecha"></mat-text-column>
                 <mat-text-column name="mobiObservaciones" headerText="observaciones"></mat-text-column>
                 <mat-text-column name="mobiOdometro" headerText="Odometro"></mat-text-column>
@@ -17,12 +27,16 @@
                         <button mat-raised-button color="accent" title="editar" (click)="editar(bitacora)">
                             Editar
                         </button>
-                        <button style="margin-left: 0.2cm;" mat-raised-button color="primary" title="realizar" (click)="realizar(bitacora)">
+                        <button style="margin-left: 0.2cm;" *ngIf="bitacora.mobiPendiente == 1" mat-raised-button color="primary" title="realizar" (click)="realizar(bitacora)">
                             Realizar
                         </button>
-                        <button style="margin-left: 0.2cm;" mat-raised-button color="warn" title="borrar" (click)="delete(bitacora)">
+                        <button style="margin-left: 0.2cm;" *ngIf="bitacora.mobiPendiente == 0" mat-raised-button color="primary" title="repetir" (click)="repetir(bitacora)">
+                            Repetir
+                        </button>
+                        <button style="margin-left: 0.2cm;"  mat-raised-button color="warn" title="borrar" (click)="delete(bitacora)">
                             Borrar
                         </button>
+                        
                         
                     </td>
                 </ng-container>

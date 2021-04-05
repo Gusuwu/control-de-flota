@@ -25,7 +25,7 @@ export class MovilServicioComponent implements OnInit {
   seleccionado = new MovilServicio();
   variable = true;
 
-  columnas: string[] = ['moseId', 'servNombre' ,'moseServId', 'moseMoviId', 'mosePeriodo', 'moseKM', 'moseFecha', 'acciones'];
+  columnas: string[] = ['servNombre', 'servDescripcion' ,'moseServId', 'moseMoviId', 'mosePeriodo', 'moseKM', 'moseFecha', 'acciones'];
   dataSource = new MatTableDataSource<MovilServicio>();
 
 
@@ -57,6 +57,7 @@ export class MovilServicioComponent implements OnInit {
         moseFechaAlta: [''],
         moseBorrado: [''],
         servNombre: [''],
+        servDescripcion : [''],
     });
 
     this.msService.get(`moseMoviId=${this.moviId}`).subscribe(
@@ -136,6 +137,7 @@ export class MovilServicioComponent implements OnInit {
 
     this.seleccionado.moseServId = this.servicios.find(grupo => grupo.servId == this.seleccionado.moseServId)!.servId;
     this.seleccionado.servNombre = this.servicios.find(grupo => grupo.servId == this.seleccionado.moseServId)!.servNombre;
+    this.seleccionado.servDescripcion = this.servicios.find(grupo => grupo.servId == this.seleccionado.moseServId)!.servDescripcion;
     this.seleccionado.mosePeriodo = this.servicios.find(servicio  => servicio.servId == this.seleccionado.moseServId)!.servPeriodo;
     this.seleccionado.moseKM = this.servicios.find(servicio  => servicio.servId == this.seleccionado.moseServId)!.servKM;
     this.seleccionado.moseFecha = this.servicios.find(servicio  => servicio.servId == this.seleccionado.moseServId)!.servFecha;

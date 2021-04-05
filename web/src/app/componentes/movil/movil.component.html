@@ -215,7 +215,14 @@
                         </div>
     
                         <div style="text-align: center;">
-                            <label>Odometro del movil: </label>
+                            <label>Patente del móvil: </label>
+                            
+                                <label *ngIf="this.formulario.value.moviId">{{this.movilSelected.patente}}</label>
+                                <label *ngIf="!this.formulario.value.moviId">Id aun no cargado</label>
+                            
+                        </div>
+                        <div style="text-align: center;">
+                            <label>Odometro del móvil: </label>
                             
                                 <label *ngIf="this.formulario.value.moviId">{{this.movilSelected.moviModoOdometro}}</label>
                                 <label *ngIf="!this.formulario.value.moviId">Id aun no cargado</label>

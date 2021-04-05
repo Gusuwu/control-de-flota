@@ -15,4 +15,5 @@ export class MovilBitacora {
     mobiBorrado: boolean = false;
     
     servNombre : string = "";
+    servDescripcion : string = "";
 }

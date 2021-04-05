@@ -1,7 +1,7 @@
 
 ### PEDIDO
 
-GET http://localhost:8888/index.php/bitacora-tarea HTTP/1.1
+GET http://localhost:8888/index.php/movil_bitacora HTTP/1.1
 
 ###
 
@@ -13,7 +13,7 @@ GET http://localhost:8888/index.php/movil?patente=GWI322 HTTP/1.1
 GET http://localhost:8888/index.php/movil?descripcion=5741 HTTP/1.1
 
 ### 
-GET http://localhost:8888/index.php/movil?dependencia=05&descripcion=1904 HTTP/1.1
+GET http://localhost:8888/index.php/movil_bitacora?mobiMovilId=1 HTTP/1.1
 
 
 

@@ -9,4 +9,5 @@ export class MovilServicio {
     moseBorrado: boolean = false;
 
     servNombre : string = "";
+    servDescripcion : string = "";
 }
